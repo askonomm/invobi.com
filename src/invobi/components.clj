@@ -3,16 +3,16 @@
     [invobi.utils :refer [lang-code->lang-name translate current-year]]))
 
 (defn- header-language-switcher [data]
-  [:div.language-switcher
-   [:button.button.small.blank {:onclick "toggleLanguageSwitcherOptions()"}
-    (lang-code->lang-name (-> data :lang))]
-   [:div.options
-    (when-not (= (-> data :lang) "en")
-      [:a.button.medium.blank.no-border {:href (str "/en" (-> data :current-pure-path))} (lang-code->lang-name "en")])
-    (when-not (= (-> data :lang) "et")
-      [:a.button.medium.blank.no-border {:href (str "/et" (-> data :current-pure-path))} (lang-code->lang-name "et")])
-    (when-not (= (-> data :lang) "es")
-      [:a.button.medium.blank.no-border {:href (str "/es" (-> data :current-pure-path))} (lang-code->lang-name "es")])]])
+  (let [langs ["en" "et" "es"]]
+    [:div.language-switcher
+     [:button.button.small.blank {:onclick "toggleLanguageSwitcherOptions()"}
+      (lang-code->lang-name (-> data :lang))]
+     [:div.options
+      (for [lang langs]
+        (when-not (= (-> data :lang) lang)
+          [:a.button.medium.blank.no-border
+           {:href (str "/" lang (-> data :current-pure-path))}
+           (lang-code->lang-name lang)]))]]))
 
 (defn header [data]
   [:div.site-header
@@ -34,13 +34,14 @@
     [:img {:src "/img/logo.png" :alt "REPL logo"}]]])
 
 (defn button [props & children]
-  (let [class (cond-> "button"
-                      (-> props :class) (str " " (-> props :class))
-                      (-> props :size) (str " " (-> props :size))
-                      (-> props :type) (str " " (-> props :type))
-                      (-> props :disabled?) (str " disabled")
-                      (-> props :no-border?) (str " no-border")
-                      (-> props :color) (str " color-" (-> props :color)))]
+  (let [class (cond->
+                "button"
+                (-> props :class) (str " " (-> props :class))
+                (-> props :size) (str " " (-> props :size))
+                (-> props :type) (str " " (-> props :type))
+                (-> props :disabled?) (str " disabled")
+                (-> props :no-border?) (str " no-border")
+                (-> props :color) (str " color-" (-> props :color)))]
     (if (-> props :href)
       [:a {:href (-> props :href)
            :class class
@@ -54,9 +55,10 @@
        children])))
 
 (defn input [{:keys [class placeholder value style full-width? type hx]}]
-  (let [class (cond-> "input"
-                      class (str " " class)
-                      full-width? (str " full-width"))]
+  (let [class (cond->
+                "input"
+                class (str " " class)
+                full-width? (str " full-width"))]
     [:input (merge {:class class
                     :placeholder placeholder
                     :value value
