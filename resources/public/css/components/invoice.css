@@ -1,0 +1,41 @@
+.invoice {
+    width: 890px;
+    background: #fff;
+    box-shadow: 0 1px 0 #fff, 0 2px 0 #fff, 0 3px 0 #111;
+    border: 1px solid #111;
+    border-radius: 3px;
+    padding: 50px;
+    margin: 50px auto;
+}
+
+@media all and (max-width: 1200px) {
+    .invoice {
+        width: 100%;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        margin: 0;
+        margin-bottom: 30px;
+    }
+}
+
+.invoice.pdf {
+    width: 100%;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 40px;
+    margin: 0;
+}
+
+.invoice-actions {
+    text-align: center;
+}
+
+@media all and (max-width: 650px) {
+    .invoice-actions .button {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 20px;
+    }
+}

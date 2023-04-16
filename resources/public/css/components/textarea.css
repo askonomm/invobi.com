@@ -1,0 +1,51 @@
+.textarea {
+    width: auto;
+    max-width: 100%;
+    font-size: 15px;
+    line-height: 1.5;
+    border: 0;
+    border-bottom: 1px dashed #bbb;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    resize: none;
+    overflow: hidden;
+    outline: none;
+}
+
+@keyframes in-out {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.textarea.is-loading {
+    background: #eee;
+    height: 25px;
+    color: transparent;
+    overflow: hidden;
+    animation: in-out 0.5s infinite ease-in-out;
+    border: 0;
+}
+
+.textarea.is-loading::placeholder {
+    color: transparent;
+}
+
+.invoice.pdf .textarea {
+    padding-bottom: 0;
+}
+
+.textarea.full-width {
+    width: 100%;
+}
+
+.invoice.pdf .textarea {
+    border: 0;
+    background: transparent;
+}

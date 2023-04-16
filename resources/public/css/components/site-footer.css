@@ -1,0 +1,38 @@
+.site-footer {
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    line-height: 2;
+    margin-top: 100px;
+}
+
+@media all and (max-width: 1200px) {
+    .site-footer {
+        margin-top: 50px;
+        padding-bottom: 30px;
+    }
+}
+
+.site-footer .icon {
+    color: #e63946;
+}
+
+.site-footer a {
+    color: #6495ED;
+}
+
+.site-footer a.logo {
+    display: block;
+    color: #6495ED;
+    margin-top: 25px;
+}
+
+.site-footer img {
+    width: 120px;
+}
+
+@media all and (max-width: 1200px) {
+    .site-footer img {
+        width: 100px;
+    }
+}

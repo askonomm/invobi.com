@@ -1,0 +1,78 @@
+.button {
+    display: inline-block;
+    width: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(0,0,0,.35);
+    background: #6495ED;
+    box-shadow: 0 1px 0 #111, 0 2px 0 #111;
+    border: 1px solid #111;
+    border-radius: 3px;
+    padding: 7px 15px;
+}
+
+.invoice.pdf .button {
+    display: none;
+}
+
+.button.small {
+    font-size: 11px;
+    padding: 3px 8px;
+}
+
+.button.medium {
+    font-size: 13px;
+    padding: 5px 12px;
+}
+
+.button.large {
+    font-size: 15px;
+    padding: 10px 20px;
+}
+
+.button.blank {
+    color: #111;
+    text-shadow: none;
+    background: #fff;
+}
+
+.button.transparent {
+    color: #111;
+    text-shadow: none;
+    background: transparent;
+}
+
+.button.secondary {
+    background: #52b788;
+}
+
+.button.warning {
+    background: #ff6f6f;
+}
+
+.button.color-warning {
+    color: #ff6f6f;
+}
+
+.button.disabled {
+    pointer-events: none;
+    opacity: .5;
+}
+
+.button:hover {
+    box-shadow: 0 1px 0 #111;
+}
+
+.button.no-border {
+    border: 0;
+    box-shadow: none;
+}
+
+.button i {
+    font-size: 1.2em;
+    margin-right: 8px;
+    bottom: -1px;
+}

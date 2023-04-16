@@ -1,0 +1,158 @@
+.invoice-table {
+    display: block;
+}
+
+.invoice-table .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    column-gap: 25px;
+    row-gap: 10px;
+}
+
+@media all and (max-width: 1200px) {
+    .invoice:not(.pdf) .invoice-table .row {
+        padding-right: 20px;
+    }
+}
+
+.invoice.pdf .invoice-table.items-cols {
+    margin-top: 20px;
+}
+
+@media all and (max-width: 650px) {
+    .invoice:not(.pdf) .invoice-items-container {
+        overflow: auto;
+        background: #f7f7f7;
+        padding-top: 20px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-bottom: 20px;
+        margin-left: -50px;
+        margin-right: -50px;
+    }
+
+    .invoice:not(.pdf) .invoice-table.items-cols {
+        width: 800px;
+        padding-bottom: 20px;
+    }
+
+    .invoice:not(.pdf) .invoice-table.items-cols input {
+        background: transparent;
+        border-bottom: 1px dashed #999;
+    }
+}
+
+.invoice-table.items-cols .column div {
+    margin-top: 10px;
+}
+
+.invoice-table.items-cols .row {
+    grid-template-columns: 6fr 1fr 1fr 1.5fr;
+}
+
+.invoice-table.heading-cols .column > div {
+    line-height: 1.35;
+    word-break: break-all;
+    margin-top: 10px;
+}
+
+.invoice-table.heading-cols .column > button {
+    margin-top: 10px;
+}
+
+
+.invoice-table.heading-cols .column > textarea {
+    display: block;
+}
+
+@media all and (max-width: 1200px) {
+    .invoice-table.heading-cols .column > .invoice-line-options {
+        right: -20px;
+    }
+}
+
+.invoice-table.heading-cols .row {
+    grid-template-columns: 50% 50%;
+}
+
+@media all and (max-width: 650px) {
+    .invoice:not(.pdf) .invoice-table.heading-cols .row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.invoice-table.two-cols .row {
+    grid-template-columns: 1fr 1fr;
+}
+
+.invoice-table.discount-cols .row {
+    grid-template-columns: 3fr 1fr;
+    padding-top: 12px;
+}
+
+@media all and (max-width: 650px) {
+    .invoice:not(.pdf) .invoice-table.discount-cols .row {
+        grid-template-columns: 110px auto;
+    }
+}
+
+.invoice-table.tax-cols .row {
+    padding-top: 8px;
+}
+
+.invoice-table.tax-single-cols .row {
+    padding-top: 8px;
+}
+
+.invoice-table.tax-cols .row {
+    grid-template-columns: 3fr 1fr;
+}
+
+.invoice-table.tax-single-cols .row {
+    grid-template-columns: 0px 1fr;
+}
+
+@media all and (max-width: 650px) {
+    .invoice:not(.pdf) .invoice-table.tax-cols .row {
+        grid-template-columns: 110px auto;
+    }
+}
+
+.invoice-table.large-rowgap .row {
+    align-items: baseline;
+    row-gap: 50px;
+}
+
+.invoice-table .row.heading {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.invoice-table .row .column {
+    display: block;
+    white-space: nowrap;
+}
+
+.invoice.pdf .invoice-table .row .column {
+    white-space: normal;
+}
+
+.invoice-table .row .column.align-right {
+    text-align: right;
+}
+
+.invoice-table .row .column.highlight {
+    font-weight: 600;
+}
+
+.invoice-table .row .column.nowrap {
+    white-space: nowrap;
+}
+
+@media all and (max-width: 650px) {
+    .invoice-table .row .column.nowrap {
+        white-space: break-spaces;
+    }
+}

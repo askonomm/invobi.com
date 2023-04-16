@@ -1,0 +1,41 @@
+.info {
+    width: auto;
+    max-width: 275px;
+    min-width: 175px;
+    text-align: left;
+    background: #ffccd5;
+    box-shadow: 0 1px 0 #fff, 0 2px 0 #111;
+    border: 1px solid #111;
+    border-radius: 3px;
+    z-index: 99999999;
+    position: fixed;
+    padding: 20px;
+    right: 50px;
+    bottom: 50px;
+}
+
+.info.success {
+    background: #d8f3dc;
+}
+
+.info h2 {
+    font-size: 16px;
+    line-height: 1.25;
+    margin-bottom: 10px;
+}
+
+.info .body {
+    font-size: 14px;
+}
+
+.info .close {
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border: 1px solid #111;
+    border-radius: 100%;
+    cursor: pointer;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+}

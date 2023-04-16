@@ -1,0 +1,41 @@
+.invoice-line-options {
+    position: absolute;
+    z-index: 20;
+    top: 3px;
+    right: -35px;
+    margin-bottom: 0;
+}
+
+@media all and (max-width: 1200px) {
+    .invoice-line-options {
+        right: 0;
+    }
+}
+
+.invoice.pdf .invoice-line-options {
+    display: none;
+}
+
+.invoice-line-options .toggle-button {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #111;
+    border-radius: 100%;
+    position: absolute;
+    z-index: 10;
+}
+
+.invoice-line-options .toggle-button:hover {
+    color: #fff;
+    background: #111;
+}
+
+.invoice-line-options .symbol {
+    display: inline-block;
+    width: 15px;
+    text-align: center;
+    font-weight: 600;
+    margin-left: -4px;
+}

@@ -1,0 +1,19 @@
+.invoice-nr {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: baseline;
+    color: #999;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.invoice-nr span {
+    white-space: nowrap;
+}
+
+.invoice-nr input {
+    display: block;
+    width: 100%;
+    font-size: inherit;
+    font-weight: 600;
+}

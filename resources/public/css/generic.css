@@ -1,0 +1,23 @@
+* {
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-size: 15px;
+    background: #fafafa;
+    padding: 50px;
+}
+
+@media all and (max-width: 1200px) {
+    body {
+        padding: 0;
+    }
+}
+
+.text-bold {
+    font-weight: 600;
+}
