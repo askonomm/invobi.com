@@ -18,7 +18,7 @@
   [:div.site-header
    [:div.left-side
     [:div.logo
-     [:a {:href "/en"}
+     [:a {:href (str "/" (-> data :lang))}
       [:img {:src "/img/invo.png" :alt "Invo"}]]]
     (header-language-switcher data)]
    [:div.nav

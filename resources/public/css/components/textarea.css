@@ -1,5 +1,6 @@
 .textarea {
     width: auto;
+    height: 20px;
     max-width: 100%;
     font-size: 15px;
     line-height: 1.5;
