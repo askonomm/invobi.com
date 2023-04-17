@@ -3,7 +3,16 @@
     [invobi.components.invoice.line-options :as line-options]
     [invobi.components :refer [option]]))
 
-(defn main [{:keys [invoice]}]
+(def currencies [{:name "USD"
+                  :symbol "$"}
+                 {:name "EUR"
+                  :symbol "€"}
+                 {:name "GBP"
+                  :symbol "£"}
+                 {:name "JPY"
+                  :symbol "¥"}])
+
+(defn main [{:keys [invoice lang]}]
   (line-options/main
     {:icon (case (:currency invoice)
              "EUR" "euro"
@@ -12,9 +21,11 @@
              "JPY" "yen"
              "euro")
      :style "margin-top: -70px;"}
-    (option
-      {:path "/"
-       :size "small"
-       :type "blank"
-       :no-border? true}
-      "EUR")))
+    (for [currency currencies]
+      (when-not (= (:name currency) (:currency invoice))
+        (option
+          {:path (str "/" lang "/invoice/" (:id invoice) "/currency/" (:name currency))
+           :size "small"
+           :type "blank"
+           :no-border? true}
+          [:span.symbol (:symbol currency)] (:name currency))))))

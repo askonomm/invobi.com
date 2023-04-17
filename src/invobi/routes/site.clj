@@ -16,7 +16,7 @@
 
 (defn- create-invoice [request]
   (let [data (data-from-request request)
-        id (db/create-invoice {})]
+        id (db/create-invoice {:currency "EUR"})]
     (->redirect (str "/" (:lang data) "/invoice/" id))))
 
 (defn- invoice [request]
