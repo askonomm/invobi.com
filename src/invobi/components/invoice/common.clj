@@ -50,10 +50,18 @@
                    :hx-post (str "/api/" lang "/invoice/" invoice-id "/update-item-name/" id)}}))
     (table/column
       {}
-      qty)
+      (input {:full-width? true
+              :type "number"
+              :value qty
+              :hx {:name "qty"
+                   :hx-post (str "/api/" lang "/invoice/" invoice-id "/update-item-qty/" id)}}))
     (table/column
       {}
-      price)
+      (input {:full-width? true
+              :type "number"
+              :value price
+              :hx {:name "price"
+                   :hx-post (str "/api/" lang "/invoice/" invoice-id "/update-item-price/" id)}}))
     (table/column
       {:align "right"}
       "0")))
