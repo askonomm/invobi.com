@@ -13,19 +13,20 @@
                   :symbol "¥"}])
 
 (defn main [{:keys [invoice lang]}]
-  (line-options/main
-    {:icon (case (:currency invoice)
-             "EUR" "euro"
-             "USD" "dollar"
-             "GBP" "sterling"
-             "JPY" "yen"
-             "euro")
-     :style "margin-top: -70px;"}
-    (for [currency currencies]
-      (when-not (= (:name currency) (:currency invoice))
-        (option
-          {:path (str "/" lang "/invoice/" (:id invoice) "/currency/" (:name currency))
-           :size "small"
-           :type "blank"
-           :no-border? true}
-          [:span.symbol (:symbol currency)] (:name currency))))))
+  [:div
+   (line-options/main
+     {:icon (case (:currency invoice)
+              "EUR" "euro"
+              "USD" "dollar"
+              "GBP" "sterling"
+              "JPY" "yen"
+              "euro")
+      :style "margin-top: -70px;"}
+     (for [currency currencies]
+       (when-not (= (:name currency) (:currency invoice))
+         (option
+           {:path (str "/" lang "/invoice/" (:id invoice) "/currency/" (:name currency))
+            :size "small"
+            :type "blank"
+            :no-border? true}
+           [:span.symbol (:symbol currency)] (:name currency)))))])

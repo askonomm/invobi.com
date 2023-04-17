@@ -1,6 +1,8 @@
 (ns invobi.routes.site
   (:require
-    [invobi.db.invoices :as db]
+    [clojure.string :as string]
+    [invobi.db.invoices :as db.invoices]
+    [invobi.db.invoice :as db]
     [invobi.utils :refer [data-from-request translate]]
     [invobi.utils.response :refer [->html-page ->redirect]]
     [invobi.pages.home :as pages.home]
@@ -16,11 +18,20 @@
 
 (defn- create-invoice [request]
   (let [data (data-from-request request)
-        id (db/create-invoice {:currency "EUR"})]
+        id (db.invoices/create-invoice {:currency "EUR"})]
+    (->redirect (str "/" (:lang data) "/invoice/" id))))
+
+(defn- set-currency [request]
+  (let [data (data-from-request request)
+        id (-> request :params :id)
+        allowed-currencies #{"EUR" "USD" "GBP" "JPY"}
+        currency (-> request :params :currency string/upper-case)]
+    (when (contains? allowed-currencies currency)
+      (db/update-currency id currency))
     (->redirect (str "/" (:lang data) "/invoice/" id))))
 
 (defn- invoice [request]
-  (if-let [invoice (db/get-invoice (-> request :params :id))]
+  (if-let [invoice (db.invoices/get-invoice (-> request :params :id))]
     (let [data (data-from-request
                  request
                  {:title (translate (-> request :params :lang) :edit-invoice)
@@ -35,6 +46,9 @@
    {:path "/:lang/create-invoice"
     :method :get
     :response create-invoice}
+   {:path "/:lang/invoice/:id/currency/:currency"
+    :method :get
+    :response set-currency}
    {:path "/:lang/invoice/:id"
     :method :get
     :response invoice}

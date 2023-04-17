@@ -7,5 +7,5 @@
     [:div.invoice-line-options
      {:style style}
      [:button.toggle-button
-      [:i {:class (str "fa fa-" icon)}]]
+      [:i {:class (str "fa fa-" icon "-sign")}]]
      (options children)]))

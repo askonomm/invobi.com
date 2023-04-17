@@ -3,7 +3,8 @@
     [invobi.components :refer [header footer]]
     [invobi.components.invoice.nr :as invoice.nr]
     [invobi.components.invoice.head :as invoice.head]
-    [invobi.components.invoice.currency :as invoice.currency]))
+    [invobi.components.invoice.currency :as invoice.currency]
+    [invobi.components.invoice.items :as invoice.items]))
 
 (defn- invoice [data]
   [:div.invoice
@@ -11,7 +12,8 @@
    [:hr.invoice-separator]
    (invoice.head/main data)
    [:hr.invoice-separator]
-   [:div (invoice.currency/main data)]])
+   (invoice.currency/main data)
+   (invoice.items/main data)])
 
 (defn main [data]
   (list

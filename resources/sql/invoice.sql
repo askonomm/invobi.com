@@ -62,3 +62,8 @@ WHERE uuid = :id
 UPDATE invoices
 SET due_date = :value
 WHERE uuid = :id
+
+-- :name update-currency-sql :! :n
+UPDATE invoices
+SET currency = :value
+WHERE uuid = :id
