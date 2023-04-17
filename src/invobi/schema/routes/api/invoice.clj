@@ -64,3 +64,7 @@
   [:map
    [:params [:map [:id string?]]]
    [:form-params [:map ["due-date" string?]]]])
+
+(def AddItem
+  [:map
+   [:params [:map [:id string?]]]])

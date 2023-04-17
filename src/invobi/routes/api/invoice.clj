@@ -1,6 +1,6 @@
 (ns invobi.routes.api.invoice
   (:require
-    [invobi.components.invoice.common :as invoice.common]
+    [invobi.components.invoice.common :as common]
     [invobi.db.invoice :as db]
     [invobi.utils.response :refer [->html ->json]]
     [invobi.utils :refer [route-middleware]]
@@ -34,11 +34,11 @@
   (let [{:keys [lang id]} (-> request :params)]
     (db/update-from-company-extra id "")
     (->html (list
-              (invoice.common/from-company-extra-label
+              (common/from-company-extra-label
                 {:id id
                  :lang lang
                  :value ""})
-              (invoice.common/from-company-extra-textarea
+              (common/from-company-extra-textarea
                 {:id id
                  :lang lang
                  :value ""})))))
@@ -77,11 +77,11 @@
   (let [{:keys [lang id]} (-> request :params)]
     (db/update-to-company-extra id "")
     (->html (list
-              (invoice.common/to-company-extra-label
+              (common/to-company-extra-label
                 {:id id
                  :lang lang
                  :value ""})
-              (invoice.common/to-company-extra-textarea
+              (common/to-company-extra-textarea
                 {:id id
                  :lang lang
                  :value ""})))))
@@ -109,6 +109,16 @@
         {:strs [due-date]} (-> request :form-params)]
     (db/update-due-date id due-date)
     (->json {:status "ok"})))
+
+(defn- add-item [request]
+  (let [{:keys [id lang]} (-> request :params)
+        items (db/get-items id)
+        new-item {:id (str (random-uuid))
+                  :name ""
+                  :qty 1
+                  :price 0}]
+    (db/update-items id (conj items new-item))
+    (->html (common/item new-item id lang))))
 
 (def routes
   [{:path "/api/:lang/invoice/:id/update-nr"
@@ -155,5 +165,8 @@
     :response #(route-middleware % update-date-issued schema/UpdateDateIssued)}
    {:path "/api/:lang/invoice/:id/update-due-date"
     :method :post
-    :response #(route-middleware % update-due-date schema/UpdateDueDate)}])
+    :response #(route-middleware % update-due-date schema/UpdateDueDate)}
+   {:path "/api/:lang/invoice/:id/add-item"
+    :method :post
+    :response #(route-middleware % add-item schema/AddItem)}])
 

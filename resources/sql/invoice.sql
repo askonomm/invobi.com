@@ -67,3 +67,13 @@ WHERE uuid = :id
 UPDATE invoices
 SET currency = :value
 WHERE uuid = :id
+
+-- :name get-items-sql :! :one
+SELECT items
+FROM invoices
+WHERE uuid = :id
+
+-- :name update-items-sql :! :n
+UPDATE invoices
+SET items = :value
+WHERE uuid = :id

@@ -3,11 +3,12 @@
 (defn main
   ([children]
    (main {} children))
-  ([{:keys [cols row-gap]} & children]
+  ([{:keys [id cols row-gap]} & children]
    (let [class (cond-> "invoice-table"
                        cols (str " " cols "-cols")
                        row-gap (str " " row-gap "-rowgap"))]
-     [:div {:class class}
+     [:div {:id id
+            :class class}
       children])))
 
 (defn row
