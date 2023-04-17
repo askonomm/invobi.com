@@ -17,7 +17,7 @@
   :aliases {"migrate" ["run" "-m" "api.db/migrate"]
             "rollback" ["run" "-m" "api.db/rollback"]}
   :profiles {:uberjar {:aot :all}}
-  :source-paths ["src" "test" "../common" "../common/src"]
+  :source-paths ["src" "test"]
   :min-lein-version "2.9.0"
   :uberjar-name "invo-api.jar"
   :main invobi.core)

@@ -2,17 +2,36 @@
   (:require
     [invobi.utils :refer [lang-code->lang-name translate current-year]]))
 
+(defn option [opts & children]
+  (let [class (cond->
+                "button"
+                (-> opts :class) (str " " (-> opts :class))
+                (-> opts :size) (str " " (-> opts :size))
+                (-> opts :type) (str " " (-> opts :type))
+                (-> opts :disabled?) (str " disabled")
+                (-> opts :no-border?) (str " no-border"))]
+    [:a {:class class
+         :href (-> opts :path)}
+     children]))
+
+(defn options [& options]
+  [:div.options
+   options])
+
 (defn- header-language-switcher [data]
-  (let [langs ["en" "et" "es"]]
+  (let [languages ["en" "et" "es"]]
     [:div.language-switcher
      [:button.button.small.blank {:onclick "toggleLanguageSwitcherOptions()"}
       (lang-code->lang-name (-> data :lang))]
-     [:div.options
-      (for [lang langs]
+     (options
+       (for [lang languages]
         (when-not (= (-> data :lang) lang)
-          [:a.button.medium.blank.no-border
-           {:href (str "/" lang (-> data :current-pure-path))}
-           (lang-code->lang-name lang)]))]]))
+          (option
+            {:path (str "/" lang (-> data :current-pure-path))
+             :size "small"
+             :type "blank"
+             :no-border? true}
+            (lang-code->lang-name lang)))))]))
 
 (defn header [data]
   [:div.site-header
@@ -67,9 +86,10 @@
                    hx)]))
 
 (defn textarea [{:keys [class placeholder value style full-width? hx]}]
-  (let [class (cond-> "textarea"
-                      class (str " " class)
-                      full-width? (str " full-width"))]
+  (let [class (cond->
+                "textarea"
+                class (str " " class)
+                full-width? (str " full-width"))]
     [:textarea (merge {:class class
                        :placeholder placeholder
                        :style style}

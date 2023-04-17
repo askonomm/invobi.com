@@ -39,3 +39,12 @@
     font-weight: 600;
     margin-left: -4px;
 }
+
+
+.invoice-line-options .options {
+    display: none;
+}
+
+.invoice-line-options .options.is-visible {
+    display: block;
+}
