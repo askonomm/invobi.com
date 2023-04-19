@@ -8,24 +8,14 @@ UPDATE invoices
 SET from_name = :value
 WHERE uuid = :id
 
--- :name update-from-company-name-sql :! :n
-UPDATE invoices
-SET from_company_name = :value
+-- :name get-from-fields-sql :! :one
+SELECT from_fields
+FROM invoices
 WHERE uuid = :id
 
--- :name update-from-company-address-sql :! :n
+-- :name update-from-fields-sql :! :n
 UPDATE invoices
-SET from_company_address = :value
-WHERE uuid = :id
-
--- :name update-from-company-extra-sql :! :n
-UPDATE invoices
-SET from_company_extra = :value
-WHERE uuid = :id
-
--- :name update-from-company-extra-label-sql :! :n
-UPDATE invoices
-SET from_company_extra_label = :value
+SET from_fields = :value
 WHERE uuid = :id
 
 -- :name update-to-name-sql :! :n
@@ -33,24 +23,14 @@ UPDATE invoices
 SET to_name = :value
 WHERE uuid = :id
 
--- :name update-to-company-name-sql :! :n
-UPDATE invoices
-SET to_company_name = :value
+-- :name get-to-fields-sql :! :one
+SELECT to_fields
+FROM invoices
 WHERE uuid = :id
 
--- :name update-to-company-address-sql :! :n
+-- :name update-to-fields-sql :! :n
 UPDATE invoices
-SET to_company_address = :value
-WHERE uuid = :id
-
--- :name update-to-company-extra-sql :! :n
-UPDATE invoices
-SET to_company_extra = :value
-WHERE uuid = :id
-
--- :name update-to-company-extra-label-sql :! :n
-UPDATE invoices
-SET to_company_extra_label = :value
+SET to_fields = :value
 WHERE uuid = :id
 
 -- :name update-date-issued-sql :! :n

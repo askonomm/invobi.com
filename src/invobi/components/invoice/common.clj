@@ -4,38 +4,21 @@
     [invobi.components.table :as table]
     [invobi.utils :refer [translate format-currency format-float]]))
 
-(defn from-company-extra-textarea [{:keys [id lang value]}]
+(defn field-value [direction {:keys [id invoice-id lang value]}]
   (textarea {:full-width? true
              :placeholder (translate lang :company-extra)
              :value value
-             :hx {:name "from-company-extra"
-                  :hx-post (str "/api/" lang "/invoice/" id "/update-from-company-extra")
+             :hx {:name "field-value"
+                  :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-" direction "-field-value")
                   :hx-trigger "keyup changed delay:250ms"}}))
 
-(defn from-company-extra-label [{:keys [id lang value]}]
+(defn field-label [direction {:keys [id invoice-id lang value]}]
   (input {:full-width? true
           :placeholder (translate lang :company-extra-label)
-          :class "extra-field-label"
+          :class "field-label"
           :value value
-          :hx {:name "from-company-extra-label"
-               :hx-post (str "/api/" lang "/invoice/" id "/update-from-company-extra-label")
-               :hx-trigger "keyup changed delay:250ms"}}))
-
-(defn to-company-extra-textarea [{:keys [id lang value]}]
-  (textarea {:full-width? true
-             :placeholder (translate lang :company-extra)
-             :value value
-             :hx {:name "to-company-extra"
-                  :hx-post (str "/api/" lang "/invoice/" id "/update-to-company-extra")
-                  :hx-trigger "keyup changed delay:250ms"}}))
-
-(defn to-company-extra-label [{:keys [id lang value]}]
-  (input {:full-width? true
-          :placeholder (translate lang :company-extra-label)
-          :class "extra-field-label"
-          :value value
-          :hx {:name "to-company-extra-label"
-               :hx-post (str "/api/" lang "/invoice/" id "/update-to-company-extra-label")
+          :hx {:name "field-label"
+               :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-" direction "-field-label")
                :hx-trigger "keyup changed delay:250ms"}}))
 
 (defn item [{:keys [id name qty price]} invoice-id currency lang]

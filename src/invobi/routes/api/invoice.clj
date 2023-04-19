@@ -18,42 +18,23 @@
     (db/update-from-name id from-name)
     (->json {:status "ok"})))
 
-(defn- update-from-company-name [request]
-  (let [{:keys [id]} (-> request :params)
-        {:strs [from-company-name]} (-> request :form-params)]
-    (db/update-from-company-name id from-company-name)
-    (->json {:status "ok"})))
-
-(defn- update-from-company-address [request]
-  (let [{:keys [id]} (-> request :params)
-        {:strs [from-company-address]} (-> request :form-params)]
-    (db/update-from-company-address id from-company-address)
-    (->json {:status "ok"})))
-
-(defn- add-from-company-extra [request]
-  (let [{:keys [lang id]} (-> request :params)]
-    (db/update-from-company-extra id "")
-    (->html (list
-              (common/from-company-extra-label
-                {:id id
-                 :lang lang
-                 :value ""})
-              (common/from-company-extra-textarea
-                {:id id
-                 :lang lang
-                 :value ""})))))
-
-(defn- update-from-company-extra [request]
-  (let [{:keys [id]} (-> request :params)
-        {:strs [from-company-extra]} (-> request :form-params)]
-    (db/update-from-company-extra id from-company-extra)
-    (->json {:status "ok"})))
-
-(defn- update-from-company-extra-label [request]
-  (let [{:keys [id]} (-> request :params)
-        {:strs [from-company-extra-label]} (-> request :form-params)]
-    (db/update-from-company-extra-label id from-company-extra-label)
-    (->json {:status "ok"})))
+(defn- add-from-field [request]
+  (let [{:keys [lang id]} (-> request :params)
+        fields (db/get-from-fields id)
+        field-id (str (random-uuid))]
+    (db/update-from-fields id (conj fields {:id field-id
+                                            :label ""
+                                            :value ""}))
+    (->html
+      (list
+        (common/field-label "from" {:id field-id
+                                    :invoice-id id
+                                    :lang lang
+                                    :value ""})
+        (common/field-value "from" {:id field-id
+                                    :invoice-id id
+                                    :lang lang
+                                    :value ""})))))
 
 (defn- update-to-name [request]
   (let [{:keys [id]} (-> request :params)
@@ -61,42 +42,23 @@
     (db/update-to-name id to-name)
     (->json {:status "ok"})))
 
-(defn- update-to-company-name [request]
-  (let [{:keys [id]} (-> request :params)
-        {:strs [to-company-name]} (-> request :form-params)]
-    (db/update-to-company-name id to-company-name)
-    (->json {:status "ok"})))
-
-(defn- update-to-company-address [request]
-  (let [{:keys [id]} (-> request :params)
-        {:strs [to-company-address]} (-> request :form-params)]
-    (db/update-to-company-address id to-company-address)
-    (->json {:status "ok"})))
-
-(defn- add-to-company-extra [request]
-  (let [{:keys [lang id]} (-> request :params)]
-    (db/update-to-company-extra id "")
-    (->html (list
-              (common/to-company-extra-label
-                {:id id
-                 :lang lang
-                 :value ""})
-              (common/to-company-extra-textarea
-                {:id id
-                 :lang lang
-                 :value ""})))))
-
-(defn- update-to-company-extra [request]
-  (let [{:keys [id]} (-> request :params)
-        {:strs [to-company-extra]} (-> request :form-params)]
-    (db/update-to-company-extra id to-company-extra)
-    (->json {:status "ok"})))
-
-(defn- update-to-company-extra-label [request]
-  (let [{:keys [id]} (-> request :params)
-        {:strs [to-company-extra-label]} (-> request :form-params)]
-    (db/update-to-company-extra-label id to-company-extra-label)
-    (->json {:status "ok"})))
+(defn- add-to-field [request]
+  (let [{:keys [lang id]} (-> request :params)
+        fields (db/get-to-fields id)
+        field-id (str (random-uuid))]
+    (db/update-to-fields id (conj fields {:id field-id
+                                          :label ""
+                                          :value ""}))
+    (->html
+      (list
+        (common/field-label "to" {:id field-id
+                                  :invoice-id id
+                                  :lang lang
+                                  :value ""})
+        (common/field-value "to" {:id field-id
+                                  :invoice-id id
+                                  :lang lang
+                                  :value ""})))))
 
 (defn- update-date-issued [request]
   (let [{:keys [id]} (-> request :params)
@@ -171,45 +133,21 @@
    {:path "/api/:lang/invoice/:id/update-from-name"
     :method :post
     :response #(route-middleware % update-from-name schema/UpdateFromName)}
-   {:path "/api/:lang/invoice/:id/update-from-company-name"
-    :method :post
-    :response #(route-middleware % update-from-company-name schema/UpdateFromCompanyName)}
-   {:path "/api/:lang/invoice/:id/update-from-company-address"
-    :method :post
-    :response #(route-middleware % update-from-company-address schema/UpdateFromCompanyAddress)}
-   {:path "/api/:lang/invoice/:id/add-from-company-extra"
-    :method :post
-    :response #(route-middleware % add-from-company-extra)}
-   {:path "/api/:lang/invoice/:id/update-from-company-extra"
-    :method :post
-    :response #(route-middleware % update-from-company-extra schema/UpdateFromCompanyExtra)}
-   {:path "/api/:lang/invoice/:id/update-from-company-extra-label"
-    :method :post
-    :response #(route-middleware % update-from-company-extra-label schema/UpdateFromCompanyExtraLabel)}
    {:path "/api/:lang/invoice/:id/update-to-name"
     :method :post
     :response #(route-middleware % update-to-name schema/UpdateToName)}
-   {:path "/api/:lang/invoice/:id/update-to-company-name"
-    :method :post
-    :response #(route-middleware % update-to-company-name schema/UpdateToCompanyName)}
-   {:path "/api/:lang/invoice/:id/update-to-company-address"
-    :method :post
-    :response #(route-middleware % update-to-company-address schema/UpdateToCompanyAddress)}
-   {:path "/api/:lang/invoice/:id/add-to-company-extra"
-    :method :post
-    :response #(route-middleware % add-to-company-extra)}
-   {:path "/api/:lang/invoice/:id/update-to-company-extra"
-    :method :post
-    :response #(route-middleware % update-to-company-extra schema/UpdateToCompanyExtra)}
-   {:path "/api/:lang/invoice/:id/update-to-company-extra-label"
-    :method :post
-    :response #(route-middleware % update-to-company-extra-label schema/UpdateToCompanyExtraLabel)}
    {:path "/api/:lang/invoice/:id/update-date-issued"
     :method :post
     :response #(route-middleware % update-date-issued schema/UpdateDateIssued)}
    {:path "/api/:lang/invoice/:id/update-due-date"
     :method :post
     :response #(route-middleware % update-due-date schema/UpdateDueDate)}
+   {:path "/api/:lang/invoice/:id/add-from-field"
+    :method :post
+    :response #(route-middleware % add-from-field schema/AddFromField)}
+   {:path "/api/:lang/invoice/:id/add-to-field"
+    :method :post
+    :response #(route-middleware % add-to-field schema/AddToField)}
    {:path "/api/:lang/invoice/:id/add-item"
     :method :post
     :response #(route-middleware % add-item schema/AddItem)}

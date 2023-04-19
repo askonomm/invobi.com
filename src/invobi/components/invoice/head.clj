@@ -17,46 +17,26 @@
                     :hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/update-from-name")
                     :hx-trigger "keyup changed delay:250ms"}})))
 
-(defn- from-company-name [invoice lang pdf?]
+(defn- from-fields [invoice lang pdf?]
   (if pdf?
-    [:div.text-bold (-> invoice :from-company-name)]
-    (textarea {:full-width? true
-               :class "text-bold"
-               :placeholder (translate lang :company-name)
-               :value (-> invoice :from-company-name)
-               :hx {:name "from-company-name"
-                    :hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/update-from-company-name")
-                    :hx-trigger "keyup changed delay:250ms"}})))
-
-(defn- from-company-address [invoice lang pdf?]
-  (if pdf?
-    [:div (-> invoice :from-company-address)]
-    (textarea {:full-width? true
-               :placeholder (translate lang :company-address)
-               :value (-> invoice :from-company-address)
-               :hx {:name "from-company-address"
-                    :hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/update-from-company-address")
-                    :hx-trigger "keyup changed delay:250ms"}})))
-
-(defn- from-company-extra [invoice lang pdf?]
-  (if pdf?
-    [:div (-> invoice :from-company-extra)]
-    (if (string/blank? (-> invoice :from-company-extra))
+    [:div "???"]
+    (list
+      (for [field (:from-fields invoice)]
+        (list
+          (invoice.common/field-label "from" {:id (-> field :id)
+                                              :invoice-id (-> invoice :id)
+                                              :lang lang
+                                              :value (-> field :label)})
+          (invoice.common/field-value "from" {:id (-> field :id)
+                                              :invoice-id (-> invoice :id)
+                                              :lang lang
+                                              :value (-> field :value)})))
       (button
         {:size "small"
          :type "blank"
-         :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-from-company-extra")
-              :hx-swap "outerHTML"}}
-        (translate lang :add-company-extra))
-      (list
-        (invoice.common/from-company-extra-label
-          {:id (-> invoice :id)
-           :lang lang
-           :value (-> invoice :from-company-extra-label)})
-        (invoice.common/from-company-extra-textarea
-          {:id (-> invoice :id)
-           :lang lang
-           :value (-> invoice :from-company-extra)})))))
+         :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-from-field")
+              :hx-swap "beforebegin"}}
+        (translate lang :add-company-extra)))))
 
 (defn- to-name [invoice lang pdf?]
   (if pdf?
@@ -69,46 +49,26 @@
                     :hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/update-to-name")
                     :hx-trigger "keyup changed delay:250ms"}})))
 
-(defn- to-company-name [invoice lang pdf?]
+(defn- to-fields [invoice lang pdf?]
   (if pdf?
-    [:div.text-bold (-> invoice :to-company-name)]
-    (textarea {:full-width? true
-               :class "text-bold"
-               :placeholder (translate lang :company-name)
-               :value (-> invoice :to-company-name)
-               :hx {:name "to-company-name"
-                    :hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/update-to-company-name")
-                    :hx-trigger "keyup changed delay:250ms"}})))
-
-(defn- to-company-address [invoice lang pdf?]
-  (if pdf?
-    [:div (-> invoice :to-company-address)]
-    (textarea {:full-width? true
-               :placeholder (translate lang :company-address)
-               :value (-> invoice :to-company-address)
-               :hx {:name "to-company-address"
-                    :hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/update-to-company-address")
-                    :hx-trigger "keyup changed delay:250ms"}})))
-
-(defn- to-company-extra [invoice lang pdf?]
-  (if pdf?
-    [:div (-> invoice :to-company-extra)]
-    (if (string/blank? (-> invoice :to-company-extra))
+    [:div "???"]
+    (list
+      (for [field (:to-fields invoice)]
+        (list
+          (invoice.common/field-label "from" {:id (-> field :id)
+                                              :invoice-id (-> invoice :id)
+                                              :lang lang
+                                              :value (-> field :label)})
+          (invoice.common/field-value "from" {:id (-> field :id)
+                                              :invoice-id (-> invoice :id)
+                                              :lang lang
+                                              :value (-> field :value)})))
       (button
         {:size "small"
          :type "blank"
-         :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-to-company-extra")
-              :hx-swap "outerHTML"}}
-        (translate lang :add-company-extra))
-      (list
-        (invoice.common/to-company-extra-label
-          {:id (-> invoice :id)
-           :lang lang
-           :value (-> invoice :to-company-extra-label)})
-        (invoice.common/to-company-extra-textarea
-          {:id (-> invoice :id)
-           :lang lang
-           :value (-> invoice :to-company-extra)})))))
+         :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-to-field")
+              :hx-swap "beforebegin"}}
+        (translate lang :add-company-extra)))))
 
 (defn- date-issued [invoice lang pdf?]
   (if pdf?
@@ -138,16 +98,12 @@
                     {}
                     [:h3.invoice-heading (translate lang :from)]
                     (from-name invoice lang pdf?)
-                    (from-company-name invoice lang pdf?)
-                    (from-company-address invoice lang pdf?)
-                    (from-company-extra invoice lang pdf?))
+                    (from-fields invoice lang pdf?))
                   (table/column
                     {}
                     [:h3.invoice-heading (translate lang :to)]
                     (to-name invoice lang pdf?)
-                    (to-company-name invoice lang pdf?)
-                    (to-company-address invoice lang pdf?)
-                    (to-company-extra invoice lang pdf?))
+                    (to-fields invoice lang pdf?))
                   (table/column
                     {}
                     [:h3.invoice-heading (translate lang :date-issued)]

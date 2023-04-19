@@ -1,5 +1,6 @@
 (ns invobi.routes.site
   (:require
+    [clojure.data.json :as json]
     [clojure.string :as string]
     [invobi.db.invoices :as db.invoices]
     [invobi.db.invoice :as db]
@@ -18,7 +19,13 @@
 
 (defn- create-invoice [request]
   (let [data (data-from-request request)
-        id (db.invoices/create-invoice {:currency "EUR"})]
+        id (db.invoices/create-invoice {:currency "EUR"
+                                        :from-fields (json/write-str [])
+                                        :to-fields (json/write-str [])
+                                        :items [{:id (str (random-uuid))
+                                                 :name ""
+                                                 :qty 1
+                                                 :price 0}]})]
     (->redirect (str "/" (:lang data) "/invoice/" id))))
 
 (defn- set-currency [request]

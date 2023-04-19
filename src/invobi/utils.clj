@@ -70,11 +70,13 @@
 
 (defn format-float [input]
   (let [symbols (DecimalFormatSymbols. Locale/US)
-        decimal-format (DecimalFormat. "#.###" symbols)]
+        decimal-format (DecimalFormat. "##.###" symbols)]
     (.format decimal-format input)))
 
 (defn format-currency [input currency]
-  (let [sign (case currency
+  (let [symbols (DecimalFormatSymbols. Locale/US)
+        decimal-format (DecimalFormat. "#,###.##" symbols)
+        sign (case currency
                "USD" "$"
                "EUR" "€"
                "GBP" "£"
@@ -86,4 +88,4 @@
                "NZD" "$"
                "SEK" "kr"
                "SGD" "$")]
-    (str sign (format-float input))))
+    (str sign (.format decimal-format input))))

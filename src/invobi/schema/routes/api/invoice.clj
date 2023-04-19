@@ -10,50 +10,10 @@
    [:params [:map [:id string?]]]
    [:form-params [:map ["from-name" string?]]]])
 
-(def UpdateFromCompanyName
-  [:map
-   [:params [:map [:id string?]]]
-   [:form-params [:map ["from-company-name" string?]]]])
-
-(def UpdateFromCompanyAddress
-  [:map
-   [:params [:map [:id string?]]]
-   [:form-params [:map ["from-company-address" string?]]]])
-
-(def UpdateFromCompanyExtra
-  [:map
-   [:params [:map [:id string?]]]
-   [:form-params [:map ["from-company-extra" string?]]]])
-
-(def UpdateFromCompanyExtraLabel
-  [:map
-   [:params [:map [:id string?]]]
-   [:form-params [:map ["from-company-extra-label" string?]]]])
-
 (def UpdateToName
   [:map
    [:params [:map [:id string?]]]
    [:form-params [:map ["to-name" string?]]]])
-
-(def UpdateToCompanyName
-  [:map
-   [:params [:map [:id string?]]]
-   [:form-params [:map ["to-company-name" string?]]]])
-
-(def UpdateToCompanyAddress
-  [:map
-   [:params [:map [:id string?]]]
-   [:form-params [:map ["to-company-address" string?]]]])
-
-(def UpdateToCompanyExtra
-  [:map
-   [:params [:map [:id string?]]]
-   [:form-params [:map ["to-company-extra" string?]]]])
-
-(def UpdateToCompanyExtraLabel
-  [:map
-   [:params [:map [:id string?]]]
-   [:form-params [:map ["to-company-extra-label" string?]]]])
 
 (def UpdateDateIssued
   [:map
@@ -64,6 +24,14 @@
   [:map
    [:params [:map [:id string?]]]
    [:form-params [:map ["due-date" string?]]]])
+
+(def AddFromField
+  [:map
+   [:params [:map [:id string?]]]])
+
+(def AddToField
+  [:map
+   [:params [:map [:id string?]]]])
 
 (def AddItem
   [:map
