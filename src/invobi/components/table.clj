@@ -4,9 +4,9 @@
   ([children]
    (main {} children))
   ([{:keys [id cols row-gap]} & children]
-   (let [class (cond-> "invoice-table"
-                       cols (str " " cols "-cols")
-                       row-gap (str " " row-gap "-rowgap"))]
+   (let [class (cond-> "invoice-table" 
+                 cols (str " " cols "-cols") 
+                 row-gap (str " " row-gap "-rowgap"))]
      [:div {:id id
             :class class}
       children])))
@@ -15,18 +15,19 @@
   ([content]
    (row {} content))
   ([{:keys [heading?]} & children]
-   [:div {:class (cond-> "row"
-                         heading? (str " heading"))}
+   [:div {:class (cond-> "row" 
+                   heading? (str " heading"))}
     children]))
 
 (defn column
   ([children]
    (column {} children))
-  ([{:keys [highlight? nowrap? align]} & children]
+  ([{:keys [highlight? nowrap? align class]} & children]3
    (let [class (cond-> "column"
-                       align (str " align-" align)
-                       highlight? (str " highlight")
-                       nowrap? (str " nowrap"))]
+                 class (str " " class) 
+                 align (str " align-" align) 
+                 highlight? (str " highlight") 
+                 nowrap? (str " nowrap"))]
      [:div {:class class}
       children])))
 

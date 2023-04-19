@@ -3,7 +3,7 @@
     [invobi.components.invoice.common :as common]
     [invobi.db.invoice :as db]
     [invobi.utils.response :refer [->html ->json]]
-    [invobi.utils :refer [route-middleware]]
+    [invobi.utils :refer [route-middleware parse-float format-currency]]
     [invobi.schema.routes.api.invoice :as schema]))
 
 (defn- update-nr [request]
@@ -112,13 +112,57 @@
 
 (defn- add-item [request]
   (let [{:keys [id lang]} (-> request :params)
+        currency (db/get-currency id)
         items (db/get-items id)
         new-item {:id (str (random-uuid))
                   :name ""
                   :qty 1
                   :price 0}]
     (db/update-items id (conj items new-item))
-    (->html (common/item new-item id lang))))
+    (->html (common/item new-item id currency lang))))
+
+(defn- update-item-name [request]
+  (let [{:keys [id item-id]} (-> request :params)
+        {:strs [name]} (-> request :form-params)
+        items (db/get-items id)
+        new-items (map #(if (= (:id %) item-id)
+                          (assoc % :name name)
+                          %)
+                       items)]
+    (db/update-items id new-items)
+    (->json {:status "ok"})))
+
+(defn- update-item-qty [request]
+  (let [{:keys [id item-id]} (-> request :params)
+        {:strs [qty]} (-> request :form-params)
+        currency (db/get-currency id)
+        items (db/get-items id)
+        item (->> items
+                  (filter #(= (:id %) item-id))
+                  first)
+        qty (parse-float qty)
+        new-items (map #(if (= (:id %) item-id)
+                          (assoc % :qty qty)
+                          %)
+                       items)]
+    (db/update-items id new-items)
+    (->html [:span (format-currency (* qty (:price item)) currency)])))
+
+(defn- update-item-price [request]
+  (let [{:keys [id item-id]} (-> request :params)
+        {:strs [price]} (-> request :form-params)
+        currency (db/get-currency id)
+        items (db/get-items id)
+        item (->> items
+                  (filter #(= (:id %) item-id))
+                  first)
+        price (parse-float price)
+        new-items (map #(if (= (:id %) item-id)
+                          (assoc % :price price)
+                          %)
+                       items)]
+    (db/update-items id new-items)
+    (->html [:span (format-currency (* price (:qty item)) currency)])))
 
 (def routes
   [{:path "/api/:lang/invoice/:id/update-nr"
@@ -168,5 +212,14 @@
     :response #(route-middleware % update-due-date schema/UpdateDueDate)}
    {:path "/api/:lang/invoice/:id/add-item"
     :method :post
-    :response #(route-middleware % add-item schema/AddItem)}])
+    :response #(route-middleware % add-item schema/AddItem)}
+   {:path "/api/:lang/invoice/:id/:item-id/update-item-name"
+    :method :post
+    :response #(route-middleware % update-item-name schema/UpdateItemName)}
+   {:path "/api/:lang/invoice/:id/:item-id/update-item-qty"
+    :method :post
+    :response #(route-middleware % update-item-qty schema/UpdateItemQty)}
+   {:path "/api/:lang/invoice/:id/:item-id/update-item-price"
+    :method :post
+    :response #(route-middleware % update-item-price schema/UpdateItemPrice)}])
 

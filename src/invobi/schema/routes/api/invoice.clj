@@ -68,3 +68,24 @@
 (def AddItem
   [:map
    [:params [:map [:id string?]]]])
+
+(def UpdateItemName
+  [:map
+   [:params [:map
+             [:id string?]
+             [:item-id string?]]]
+   [:form-params [:map ["name" string?]]]])
+
+(def UpdateItemQty
+  [:map
+   [:params [:map
+             [:id string?]
+             [:item-id string?]]]
+   [:form-params [:map ["qty" string?]]]])
+
+(def UpdateItemPrice
+  [:map
+   [:params [:map
+             [:id string?]
+             [:item-id string?]]]
+   [:form-params [:map ["price" string?]]]])

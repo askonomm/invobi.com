@@ -6,7 +6,9 @@
     [malli.core :as m]
     [malli.error :as me])
   (:import
-    (java.time Year)))
+    (java.text DecimalFormat DecimalFormatSymbols NumberFormat)
+    (java.time Year)
+    (java.util Locale)))
 
 (defn <-json [data]
   (-> data :body 
@@ -55,6 +57,33 @@
   ([request response]
    (response request))
   ([request response schema]
+   (prn request)
    (if (validate request schema)
      (response request)
      (->html "Something went wrong."))))
+
+(defn parse-float [input]
+  (try
+    (Float/parseFloat input)
+    (catch Exception _
+      0)))
+
+(defn format-float [input]
+  (let [symbols (DecimalFormatSymbols. Locale/US)
+        decimal-format (DecimalFormat. "#.###" symbols)]
+    (.format decimal-format input)))
+
+(defn format-currency [input currency]
+  (let [sign (case currency
+               "USD" "$"
+               "EUR" "€"
+               "GBP" "£"
+               "AUD" "$"
+               "CAD" "$"
+               "CHF" "CHF"
+               "CNY" "¥"
+               "JPY" "¥"
+               "NZD" "$"
+               "SEK" "kr"
+               "SGD" "$")]
+    (str sign (format-float input))))

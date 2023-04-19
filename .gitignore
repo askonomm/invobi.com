@@ -2,3 +2,6 @@ db/
 .DS_Store
 target/
 .lein-repl-history
+.clj-kondo/
+.lsp/
+.idea/

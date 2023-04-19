@@ -63,6 +63,11 @@ UPDATE invoices
 SET due_date = :value
 WHERE uuid = :id
 
+-- :name get-currency-sql :! :one
+SELECT currency
+FROM invoices
+WHERE uuid = :id
+
 -- :name update-currency-sql :! :n
 UPDATE invoices
 SET currency = :value

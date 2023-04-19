@@ -18,7 +18,7 @@
         (table/column {} "Price")
         (table/column {:align "right"} "Total"))
       (for [i (-> invoice :items)]
-        (common/item i (:id invoice) lang)))
+        (common/item i (:id invoice) (:currency invoice) lang)))
     (button
       {:style "margin-top: 25px;"
        :hx {:name "add-item"
