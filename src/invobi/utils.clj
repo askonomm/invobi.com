@@ -57,7 +57,6 @@
   ([request response]
    (response request))
   ([request response schema]
-   (prn request)
    (if (validate request schema)
      (response request)
      (->html "Something went wrong."))))

@@ -36,7 +36,7 @@
          :type "blank"
          :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-from-field")
               :hx-swap "beforebegin"}}
-        (translate lang :add-company-extra)))))
+        (translate lang :add-field)))))
 
 (defn- to-name [invoice lang pdf?]
   (if pdf?
@@ -55,20 +55,20 @@
     (list
       (for [field (:to-fields invoice)]
         (list
-          (invoice.common/field-label "from" {:id (-> field :id)
-                                              :invoice-id (-> invoice :id)
-                                              :lang lang
-                                              :value (-> field :label)})
-          (invoice.common/field-value "from" {:id (-> field :id)
-                                              :invoice-id (-> invoice :id)
-                                              :lang lang
-                                              :value (-> field :value)})))
+          (invoice.common/field-label "to" {:id (-> field :id)
+                                            :invoice-id (-> invoice :id)
+                                            :lang lang
+                                            :value (-> field :label)})
+          (invoice.common/field-value "to" {:id (-> field :id)
+                                            :invoice-id (-> invoice :id)
+                                            :lang lang
+                                            :value (-> field :value)})))
       (button
         {:size "small"
          :type "blank"
          :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-to-field")
               :hx-swap "beforebegin"}}
-        (translate lang :add-company-extra)))))
+        (translate lang :add-field)))))
 
 (defn- date-issued [invoice lang pdf?]
   (if pdf?

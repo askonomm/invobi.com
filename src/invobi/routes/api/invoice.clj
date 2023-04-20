@@ -36,6 +36,30 @@
                                     :lang lang
                                     :value ""})))))
 
+(defn- update-from-field-label [request]
+  (let [{:keys [id field-id]} (-> request :params)
+        {:strs [label]} (-> request :form-params)
+        fields (db/get-from-fields id)
+        new-fields (mapv (fn [field]
+                           (if (= (:id field) field-id)
+                             (assoc field :label label)
+                             field))
+                         fields)]
+    (db/update-from-fields id new-fields)
+    (->json {:status "ok"})))
+
+(defn- update-from-field-value [request]
+  (let [{:keys [id field-id]} (-> request :params)
+        {:strs [value]} (-> request :form-params)
+        fields (db/get-from-fields id)
+        new-fields (mapv (fn [field]
+                           (if (= (:id field) field-id)
+                             (assoc field :value value)
+                             field))
+                         fields)]
+    (db/update-from-fields id new-fields)
+    (->json {:status "ok"})))
+
 (defn- update-to-name [request]
   (let [{:keys [id]} (-> request :params)
         {:strs [to-name]} (-> request :form-params)]
@@ -59,6 +83,31 @@
                                   :invoice-id id
                                   :lang lang
                                   :value ""})))))
+
+(defn- update-to-field-label [request]
+  (let [{:keys [id field-id]} (-> request :params)
+        {:strs [label]} (-> request :form-params)
+        fields (db/get-to-fields id)
+        new-fields (mapv (fn [field]
+                           (if (= (:id field) field-id)
+                             (assoc field :label label)
+                             field))
+                         fields)]
+    (prn "new fields: " new-fields)
+    (db/update-to-fields id new-fields)
+    (->json {:status "ok"})))
+
+(defn- update-to-field-value [request]
+  (let [{:keys [id field-id]} (-> request :params)
+        {:strs [value]} (-> request :form-params)
+        fields (db/get-to-fields id)
+        new-fields (mapv (fn [field]
+                           (if (= (:id field) field-id)
+                             (assoc field :value value)
+                             field))
+                         fields)]
+    (db/update-to-fields id new-fields)
+    (->json {:status "ok"})))
 
 (defn- update-date-issued [request]
   (let [{:keys [id]} (-> request :params)
@@ -145,9 +194,21 @@
    {:path "/api/:lang/invoice/:id/add-from-field"
     :method :post
     :response #(route-middleware % add-from-field schema/AddFromField)}
+   {:path "/api/:lang/invoice/:id/:field-id/update-from-field-label"
+    :method :post
+    :response #(route-middleware % update-from-field-label schema/UpdateFromFieldLabel)}
+   {:path "/api/:lang/invoice/:id/:field-id/update-from-field-value"
+    :method :post
+    :response #(route-middleware % update-from-field-value schema/UpdateFromFieldValue)}
    {:path "/api/:lang/invoice/:id/add-to-field"
     :method :post
     :response #(route-middleware % add-to-field schema/AddToField)}
+   {:path "/api/:lang/invoice/:id/:field-id/update-to-field-label"
+    :method :post
+    :response #(route-middleware % update-to-field-label schema/UpdateToFieldLabel)}
+   {:path "/api/:lang/invoice/:id/:field-id/update-to-field-value"
+    :method :post
+    :response #(route-middleware % update-to-field-value schema/UpdateToFieldValue)}
    {:path "/api/:lang/invoice/:id/add-item"
     :method :post
     :response #(route-middleware % add-item schema/AddItem)}

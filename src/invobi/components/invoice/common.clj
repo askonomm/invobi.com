@@ -6,18 +6,18 @@
 
 (defn field-value [direction {:keys [id invoice-id lang value]}]
   (textarea {:full-width? true
-             :placeholder (translate lang :company-extra)
+             :placeholder (translate lang :field-label)
              :value value
-             :hx {:name "field-value"
+             :hx {:name "value"
                   :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-" direction "-field-value")
                   :hx-trigger "keyup changed delay:250ms"}}))
 
 (defn field-label [direction {:keys [id invoice-id lang value]}]
   (input {:full-width? true
-          :placeholder (translate lang :company-extra-label)
+          :placeholder (translate lang :field-value)
           :class "field-label"
           :value value
-          :hx {:name "field-label"
+          :hx {:name "label"
                :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-" direction "-field-label")
                :hx-trigger "keyup changed delay:250ms"}}))
 

@@ -2,8 +2,9 @@
 
 (def et
   {:company-extra "Lisa väli"
-   :company-extra-label "Välja nimi (Valikuline)"
-   :add-company-extra "Lisa väli"
+   :field-label "Välja nimi (Valikuline)"
+   :field-value "Välja sisu"
+   :add-field "Lisa väli"
    :remove-company-extra "Eemalda väli"
    :blog "Blogi"
    :discount "Allahindlus"
@@ -60,8 +61,9 @@
 
 (def en
   {:company-extra "Extra field"
-   :company-extra-label "Field name (Optional)"
-   :add-company-extra "Add field"
+   :field-label "Field name (Optional)"
+   :field-value "Field value"
+   :add-field "Add field"
    :remove-company-extra "Remove field"
    :blog "Blog"
    :discount "Discount"
@@ -118,8 +120,9 @@
 
 (def es
   {:company-extra "Campo aditional"
-   :company-extra-label "Nombre del campo (Opcional)"
-   :add-company-extra "Agregar campo"
+   :field-label "Nombre del campo (Opcional)"
+   :field-value ""
+   :add-field "Agregar campo"
    :remove-company-extra "Quitar campo"
    :blog "Blog"
    :discount "Descuento"

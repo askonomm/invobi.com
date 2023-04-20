@@ -29,9 +29,37 @@
   [:map
    [:params [:map [:id string?]]]])
 
+(def UpdateFromFieldLabel
+  [:map
+   [:params [:map
+             [:id string?]
+             [:field-id string?]]]
+   [:form-params [:map ["label" string?]]]])
+
+(def UpdateFromFieldValue
+  [:map
+   [:params [:map
+             [:id string?]
+             [:field-id string?]]]
+   [:form-params [:map ["value" string?]]]])
+
 (def AddToField
   [:map
    [:params [:map [:id string?]]]])
+
+(def UpdateToFieldLabel
+  [:map
+   [:params [:map
+             [:id string?]
+             [:field-id string?]]]
+   [:form-params [:map ["label" string?]]]])
+
+(def UpdateToFieldValue
+  [:map
+   [:params [:map
+             [:id string?]
+             [:field-id string?]]]
+   [:form-params [:map ["value" string?]]]])
 
 (def AddItem
   [:map
