@@ -1,10 +1,10 @@
 (ns invobi.routes.api.invoice
   (:require
-    [invobi.components.invoice.common :as common]
-    [invobi.db.invoice :as db]
-    [invobi.utils.response :refer [->html ->json]]
-    [invobi.utils :refer [route-middleware parse-float format-currency]]
-    [invobi.schema.routes.api.invoice :as schema]))
+   [invobi.components.invoice.common :as common]
+   [invobi.db.invoice :as db]
+   [invobi.utils.response :refer [->html ->json]]
+   [invobi.utils :refer [route-middleware parse-float format-currency]]
+   [invobi.schema.routes.api.invoice :as schema]))
 
 (defn- update-nr [request]
   (let [{:keys [id]} (-> request :params)
@@ -26,15 +26,19 @@
                                             :label ""
                                             :value ""}))
     (->html
+     [:div.field
       (list
-        (common/field-label "from" {:id field-id
+       (common/delete-field "from" {:id field-id
                                     :invoice-id id
-                                    :lang lang
-                                    :value ""})
-        (common/field-value "from" {:id field-id
-                                    :invoice-id id
-                                    :lang lang
-                                    :value ""})))))
+                                    :lang lang})
+       (common/field-label "from" {:id field-id
+                                   :invoice-id id
+                                   :lang lang
+                                   :value ""})
+       (common/field-value "from" {:id field-id
+                                   :invoice-id id
+                                   :lang lang
+                                   :value ""}))])))
 
 (defn- update-from-field-label [request]
   (let [{:keys [id field-id]} (-> request :params)
@@ -81,15 +85,19 @@
                                           :label ""
                                           :value ""}))
     (->html
+     [:div.field
       (list
-        (common/field-label "to" {:id field-id
+       (common/delete-field "to" {:id field-id
                                   :invoice-id id
-                                  :lang lang
-                                  :value ""})
-        (common/field-value "to" {:id field-id
-                                  :invoice-id id
-                                  :lang lang
-                                  :value ""})))))
+                                  :lang lang})
+       (common/field-label "to" {:id field-id
+                                 :invoice-id id
+                                 :lang lang
+                                 :value ""})
+       (common/field-value "to" {:id field-id
+                                 :invoice-id id
+                                 :lang lang
+                                 :value ""}))])))
 
 (defn- update-to-field-label [request]
   (let [{:keys [id field-id]} (-> request :params)
@@ -165,13 +173,12 @@
         item (->> items
                   (filter #(= (:id %) item-id))
                   first)
-        qty (parse-float qty)
         new-items (map #(if (= (:id %) item-id)
                           (assoc % :qty qty)
                           %)
                        items)]
     (db/update-items id new-items)
-    (->html [:span (format-currency (* qty (:price item)) currency)])))
+    (->html [:span (format-currency (* (parse-float qty) (parse-float (:price item))) currency)])))
 
 (defn- update-item-price [request]
   (let [{:keys [id item-id]} (-> request :params)
@@ -181,13 +188,12 @@
         item (->> items
                   (filter #(= (:id %) item-id))
                   first)
-        price (parse-float price)
         new-items (map #(if (= (:id %) item-id)
                           (assoc % :price price)
                           %)
                        items)]
     (db/update-items id new-items)
-    (->html [:span (format-currency (* price (:qty item)) currency)])))
+    (->html [:span (format-currency (* (parse-float price) (parse-float (:qty item))) currency)])))
 
 (def routes
   [{:path "/api/:lang/invoice/:id/update-nr"

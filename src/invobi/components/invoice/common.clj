@@ -2,7 +2,7 @@
   (:require
     [invobi.components :refer [textarea input button]]
     [invobi.components.table :as table]
-    [invobi.utils :refer [translate format-currency format-float]]))
+    [invobi.utils :refer [translate format-currency parse-float]]))
 
 (defn delete-field [direction {:keys [id invoice-id lang]}]
   (button
@@ -46,7 +46,7 @@
       {}
       (input {:full-width? true
               :type "number"
-              :value (format-float qty)
+              :value qty
               :hx {:name "qty"
                    :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-item-qty")
                    :hx-swap "innerHTML"
@@ -56,7 +56,7 @@
       {}
       (input {:full-width? true
               :type "number"
-              :value (format-float price)
+              :value price
               :hx {:name "price"
                    :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-item-price")
                    :hx-swap "innerHTML"
@@ -65,4 +65,4 @@
     (table/column
       {:class "total-price"
        :align "right"}
-      (format-currency (* qty price) currency))))
+      (format-currency (* (parse-float qty) (parse-float price)) currency))))

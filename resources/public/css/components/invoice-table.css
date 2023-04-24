@@ -73,6 +73,8 @@
     top: 16px;
     z-index: 10;
     background: #fff;
+    position: absolute;
+    right: 0;
 }
 
 .invoice-table.heading-cols .field:hover .delete-field {

@@ -12,7 +12,8 @@
                  [buddy/buddy-core "1.10.413"]
                  [ring "1.9.6"]
                  [hiccup "1.0.5"]
-                 [metosin/malli "0.11.0"]]
+                 [metosin/malli "0.11.0"]
+                 [io.randomseed/bankster "1.2.16"]]
   :plugins []
   :aliases {"migrate" ["run" "-m" "api.db/migrate"]
             "rollback" ["run" "-m" "api.db/rollback"]}

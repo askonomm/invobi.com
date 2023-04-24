@@ -1,18 +1,20 @@
 (ns invobi.utils
   (:require
-    [clojure.data.json :as json]
-    [invobi.translations :refer [en es et]]
-    [invobi.utils.response :refer [->html]]
-    [malli.core :as m]
-    [malli.error :as me])
+   [clojure.data.json :as json]
+   [invobi.translations :refer [en es et]]
+   [invobi.utils.response :refer [->html]]
+   [io.randomseed.bankster.money :as money]
+   [io.randomseed.bankster.scale :refer [ROUND_HALF_UP]]
+   [malli.core :as m]
+   [malli.error :as me])
   (:import
-    (java.text DecimalFormat DecimalFormatSymbols NumberFormat)
-    (java.time Year)
-    (java.util Locale)))
+   (java.text DecimalFormat DecimalFormatSymbols NumberFormat)
+   (java.time Year)
+   (java.util Locale)))
 
 (defn <-json [data]
-  (-> data :body 
-      slurp 
+  (-> data :body
+      slurp
       (json/read-str :key-fn keyword)))
 
 (defn lang-code->lang-name [code]
@@ -67,24 +69,8 @@
     (catch Exception _
       0)))
 
-(defn format-float [input]
-  (let [symbols (DecimalFormatSymbols. Locale/US)
-        decimal-format (DecimalFormat. "##.###" symbols)]
-    (.format decimal-format input)))
-
 (defn format-currency [input currency]
-  (let [symbols (DecimalFormatSymbols. Locale/US)
-        decimal-format (DecimalFormat. "#,###.##" symbols)
-        sign (case currency
-               "USD" "$"
-               "EUR" "€"
-               "GBP" "£"
-               "AUD" "$"
-               "CAD" "$"
-               "CHF" "CHF"
-               "CNY" "¥"
-               "JPY" "¥"
-               "NZD" "$"
-               "SEK" "kr"
-               "SGD" "$")]
-    (str sign (.format decimal-format input))))
+  (try
+   (money/format (money/of (keyword currency) input ROUND_HALF_UP))
+   (catch Exception _
+     0))) 
