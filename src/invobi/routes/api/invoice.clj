@@ -60,6 +60,13 @@
     (db/update-from-fields id new-fields)
     (->json {:status "ok"})))
 
+(defn- delete-from-field [request]
+  (let [{:keys [id field-id]} (-> request :params)
+        fields (db/get-from-fields id)
+        new-fields (remove #(= (:id %) field-id) fields)]
+    (db/update-from-fields id new-fields)
+    (->json {:status "ok"})))
+
 (defn- update-to-name [request]
   (let [{:keys [id]} (-> request :params)
         {:strs [to-name]} (-> request :form-params)]
@@ -106,6 +113,13 @@
                              (assoc field :value value)
                              field))
                          fields)]
+    (db/update-to-fields id new-fields)
+    (->json {:status "ok"})))
+
+(defn- delete-to-field [request]
+  (let [{:keys [id field-id]} (-> request :params)
+        fields (db/get-to-fields id)
+        new-fields (remove #(= (:id %) field-id) fields)]
     (db/update-to-fields id new-fields)
     (->json {:status "ok"})))
 
@@ -200,6 +214,9 @@
    {:path "/api/:lang/invoice/:id/:field-id/update-from-field-value"
     :method :post
     :response #(route-middleware % update-from-field-value schema/UpdateFromFieldValue)}
+   {:path "/api/:lang/invoice/:id/:field-id/delete-from-field"
+    :method :post
+    :response #(route-middleware % delete-from-field schema/DeleteFromField)}
    {:path "/api/:lang/invoice/:id/add-to-field"
     :method :post
     :response #(route-middleware % add-to-field schema/AddToField)}
@@ -209,6 +226,9 @@
    {:path "/api/:lang/invoice/:id/:field-id/update-to-field-value"
     :method :post
     :response #(route-middleware % update-to-field-value schema/UpdateToFieldValue)}
+   {:path "/api/:lang/invoice/:id/:field-id/delete-to-field"
+    :method :post
+    :response #(route-middleware % delete-to-field schema/DeleteToField)}
    {:path "/api/:lang/invoice/:id/add-item"
     :method :post
     :response #(route-middleware % add-item schema/AddItem)}

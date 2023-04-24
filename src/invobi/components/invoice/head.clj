@@ -22,17 +22,22 @@
     [:div "???"]
     (list
       (for [field (:from-fields invoice)]
-        (list
-          (invoice.common/field-label "from" {:id (-> field :id)
-                                              :invoice-id (-> invoice :id)
-                                              :lang lang
-                                              :value (-> field :label)})
-          (invoice.common/field-value "from" {:id (-> field :id)
-                                              :invoice-id (-> invoice :id)
-                                              :lang lang
-                                              :value (-> field :value)})))
+        [:div.field
+         (list
+           (invoice.common/delete-field "from" {:id (-> field :id)
+                                                :invoice-id (-> invoice :id)
+                                                :lang lang})
+           (invoice.common/field-label "from" {:id (-> field :id)
+                                               :invoice-id (-> invoice :id)
+                                               :lang lang
+                                               :value (-> field :label)})
+           (invoice.common/field-value "from" {:id (-> field :id)
+                                               :invoice-id (-> invoice :id)
+                                               :lang lang
+                                               :value (-> field :value)}))])
       (button
-        {:size "small"
+        {:style "margin-top: 25px;"
+         :size "small"
          :type "blank"
          :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-from-field")
               :hx-swap "beforebegin"}}
@@ -54,17 +59,22 @@
     [:div "???"]
     (list
       (for [field (:to-fields invoice)]
-        (list
-          (invoice.common/field-label "to" {:id (-> field :id)
-                                            :invoice-id (-> invoice :id)
-                                            :lang lang
-                                            :value (-> field :label)})
-          (invoice.common/field-value "to" {:id (-> field :id)
-                                            :invoice-id (-> invoice :id)
-                                            :lang lang
-                                            :value (-> field :value)})))
+        [:div.field
+         (list
+           (invoice.common/delete-field "to" {:id (-> field :id)
+                                              :invoice-id (-> invoice :id)
+                                              :lang lang})
+           (invoice.common/field-label "to" {:id (-> field :id)
+                                             :invoice-id (-> invoice :id)
+                                             :lang lang
+                                             :value (-> field :label)})
+           (invoice.common/field-value "to" {:id (-> field :id)
+                                             :invoice-id (-> invoice :id)
+                                             :lang lang
+                                             :value (-> field :value)}))])
       (button
-        {:size "small"
+        {:style "margin-top: 25px;"
+         :size "small"
          :type "blank"
          :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-to-field")
               :hx-swap "beforebegin"}}

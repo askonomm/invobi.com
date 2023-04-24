@@ -1,8 +1,18 @@
 (ns invobi.components.invoice.common
   (:require
-    [invobi.components :refer [textarea input]]
+    [invobi.components :refer [textarea input button]]
     [invobi.components.table :as table]
     [invobi.utils :refer [translate format-currency format-float]]))
+
+(defn delete-field [direction {:keys [id invoice-id lang]}]
+  (button
+    {:class "delete-field color-warning"
+     :size "small"
+     :type "transparent"
+     :hx {:hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/delete-" direction "-field")
+          :hx-swap "delete"
+          :hx-target "closest .field"}}
+    (translate lang :delete-field)))
 
 (defn field-value [direction {:keys [id invoice-id lang value]}]
   (textarea {:full-width? true

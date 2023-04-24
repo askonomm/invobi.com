@@ -52,18 +52,30 @@
 }
 
 /* head cols */
-.invoice-table.heading-cols .column > div {
+.invoice-table.heading-cols .field {
     line-height: 1.35;
     word-break: break-all;
     margin-top: 10px;
 }
 
-.invoice-table.heading-cols .column > button {
+.invoice-table.heading-cols .field button {
     margin-top: 10px;
 }
 
 
-.invoice-table.heading-cols .column > textarea {
+.invoice-table.heading-cols .field textarea {
+    display: block;
+}
+
+.invoice-table.heading-cols .field .delete-field {
+    display: none;
+    float: right;
+    top: 16px;
+    z-index: 10;
+    background: #fff;
+}
+
+.invoice-table.heading-cols .field:hover .delete-field {
     display: block;
 }
 

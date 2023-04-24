@@ -43,6 +43,12 @@
              [:field-id string?]]]
    [:form-params [:map ["value" string?]]]])
 
+(def DeleteFromField
+  [:map
+   [:params [:map
+             [:id string?]
+             [:field-id string?]]]])
+
 (def AddToField
   [:map
    [:params [:map [:id string?]]]])
@@ -60,6 +66,12 @@
              [:id string?]
              [:field-id string?]]]
    [:form-params [:map ["value" string?]]]])
+
+(def DeleteToField
+  [:map
+   [:params [:map
+             [:id string?]
+             [:field-id string?]]]])
 
 (def AddItem
   [:map
