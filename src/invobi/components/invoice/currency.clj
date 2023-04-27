@@ -16,11 +16,11 @@
   [:div
    (line-options/main
      {:icon (case (:currency invoice)
-              "EUR" "euro"
-              "USD" "dollar"
-              "GBP" "sterling"
-              "JPY" "yen"
-              "euro")
+              "EUR" "euro-sign"
+              "USD" "dollar-sign"
+              "GBP" "sterling-sign"
+              "JPY" "yen-sign"
+              "euro-sign")
       :style "margin-top: -70px;"}
      (for [currency currencies]
        (when-not (= (:name currency) (:currency invoice))

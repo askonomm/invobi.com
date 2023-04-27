@@ -1,8 +1,9 @@
 (ns invobi.components.invoice.common
   (:require
-    [invobi.components :refer [textarea input button]]
-    [invobi.components.table :as table]
-    [invobi.utils :refer [translate format-currency parse-float]]))
+     [invobi.components :refer [button input textarea option]]
+     [invobi.components.invoice.line-options :as line-options]
+     [invobi.components.table :as table]
+     [invobi.utils :refer [format-currency parse-float translate]]))
 
 (defn delete-field [direction {:keys [id invoice-id lang]}]
   (button
@@ -65,4 +66,13 @@
     (table/column
       {:class "total-price"
        :align "right"}
-      (format-currency (* (parse-float qty) (parse-float price)) currency))))
+      (format-currency (* (parse-float qty) (parse-float price)) currency))
+    (line-options/main 
+      {}
+      (option 
+        {:size "small"
+         :type "blank"
+         :no-border? true}
+        (translate lang :remove-item)))))
+                         
+    

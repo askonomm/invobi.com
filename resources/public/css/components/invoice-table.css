@@ -49,6 +49,7 @@
 
 .invoice-table.items-cols .row {
     grid-template-columns: 6fr 1fr 1fr 1.5fr;
+    margin-bottom: 5px;
 }
 
 /* head cols */

@@ -1,11 +1,10 @@
 (ns invobi.components.invoice.head
   (:require
     [invobi.components :refer [button input textarea]]
-    [invobi.components.invoice.common :as invoice.common]
+    [invobi.components.invoice.common :refer [delete-field field-label field-value]]
     [invobi.components.table :as table]
-    [invobi.utils :refer [translate format-date]]
-    [clojure.string :as string]))
-
+    [invobi.utils :refer [translate format-date]]))
+   
 (defn- from-name [invoice lang pdf?]
   (if pdf?
     [:div.text-bold (-> invoice :from-name)]
@@ -24,19 +23,19 @@
       (for [field (:from-fields invoice)]
         [:div.field
          (list
-           (invoice.common/delete-field "from" {:id (-> field :id)
-                                                :invoice-id (-> invoice :id)
-                                                :lang lang})
-           (invoice.common/field-label "from" {:id (-> field :id)
-                                               :invoice-id (-> invoice :id)
-                                               :lang lang
-                                               :value (-> field :label)})
-           (invoice.common/field-value "from" {:id (-> field :id)
-                                               :invoice-id (-> invoice :id)
-                                               :lang lang
-                                               :value (-> field :value)}))])
+           (delete-field "from" {:id (-> field :id)
+                                 :invoice-id (-> invoice :id)
+                                 :lang lang})
+           (field-label "from" {:id (-> field :id)
+                                :invoice-id (-> invoice :id)
+                                :lang lang
+                                :value (-> field :label)})
+           (field-value "from" {:id (-> field :id)
+                                :invoice-id (-> invoice :id)
+                                :lang lang
+                                :value (-> field :value)}))])
       (button
-        {:style "margin-top: 25px;"
+        {:style "margin-top: 15px;"
          :size "small"
          :type "blank"
          :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-from-field")
@@ -61,19 +60,19 @@
       (for [field (:to-fields invoice)]
         [:div.field
          (list
-           (invoice.common/delete-field "to" {:id (-> field :id)
-                                              :invoice-id (-> invoice :id)
-                                              :lang lang})
-           (invoice.common/field-label "to" {:id (-> field :id)
-                                             :invoice-id (-> invoice :id)
-                                             :lang lang
-                                             :value (-> field :label)})
-           (invoice.common/field-value "to" {:id (-> field :id)
-                                             :invoice-id (-> invoice :id)
-                                             :lang lang
-                                             :value (-> field :value)}))])
+           (delete-field "to" {:id (-> field :id)
+                               :invoice-id (-> invoice :id)
+                               :lang lang})
+           (field-label "to" {:id (-> field :id)
+                              :invoice-id (-> invoice :id)
+                              :lang lang
+                              :value (-> field :label)})
+           (field-value "to" {:id (-> field :id)
+                              :invoice-id (-> invoice :id)
+                              :lang lang
+                              :value (-> field :value)}))])
       (button
-        {:style "margin-top: 25px;"
+        {:style "margin-top: 15px;"
          :size "small"
          :type "blank"
          :hx {:hx-post (str "/api/" lang "/invoice/" (-> invoice :id) "/add-to-field")
@@ -100,27 +99,27 @@
   (let [lang (-> data :lang)
         pdf? (-> data :pdf?)
         invoice (-> data :invoice)]
-    (table/main {:cols "heading"
-                 :row-gap "large"}
-                (table/row
-                  {}
-                  (table/column
-                    {}
-                    [:h3.invoice-heading (translate lang :from)]
-                    (from-name invoice lang pdf?)
-                    (from-fields invoice lang pdf?))
-                  (table/column
-                    {}
-                    [:h3.invoice-heading (translate lang :to)]
-                    (to-name invoice lang pdf?)
-                    (to-fields invoice lang pdf?))
-                  (table/column
-                    {}
-                    [:h3.invoice-heading (translate lang :date-issued)]
-                    (date-issued invoice lang pdf?))
-                  (table/column
-                    {}
-                    [:h3.invoice-heading (translate lang :due-date)]
-                    (due-date invoice lang pdf?))))))
-
+    (table/main 
+      {:cols "heading"
+       :row-gap "large"}
+      (table/row 
+        {}
+        (table/column
+          {}
+          [:h3.invoice-heading (translate lang :from)]
+          (from-name invoice lang pdf?)
+          (from-fields invoice lang pdf?))
+        (table/column
+          {}
+          [:h3.invoice-heading (translate lang :to)]
+          (to-name invoice lang pdf?)
+          (to-fields invoice lang pdf?))
+        (table/column
+          {}
+          [:h3.invoice-heading (translate lang :date-issued)]
+          (date-issued invoice lang pdf?))
+        (table/column
+          {}
+          [:h3.invoice-heading (translate lang :due-date)]
+          (due-date invoice lang pdf?))))))
 

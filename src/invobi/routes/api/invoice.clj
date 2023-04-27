@@ -149,8 +149,8 @@
         items (db/get-items id)
         new-item {:id (str (random-uuid))
                   :name ""
-                  :qty 1
-                  :price 0}]
+                  :qty "1"
+                  :price "0"}]
     (db/update-items id (conj items new-item))
     (->html (common/item new-item id currency lang))))
 

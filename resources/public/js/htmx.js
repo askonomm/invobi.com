@@ -1,3 +1,4 @@
 window.addEventListener('htmx:load', () => {
-    listenToTextareaHeightChanges();
+  listenToTextareaHeightChanges();
+  initLineOptions();
 });
