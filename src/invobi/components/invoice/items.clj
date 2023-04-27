@@ -5,6 +5,9 @@
     [invobi.components.invoice.common :as common]
     [invobi.utils :refer [translate]]))
 
+(defn- qty [qty-type]
+  "QTY")
+
 (defn main [{:keys [lang invoice]}]
   (list
     [:h3.invoice-heading (translate lang :items)]
@@ -13,10 +16,10 @@
        :cols "items"}
       (table/row
         {:heading? true}
-        (table/column {} "Name")
-        (table/column {} "QTY")
-        (table/column {} "Price")
-        (table/column {:align "right"} "Total"))
+        (table/column {} (translate lang :name))
+        (table/column {} (qty (:qty-type invoice)))
+        (table/column {} (translate lang :price))
+        (table/column {:align "right"} (translate lang :total)))
       (for [i (-> invoice :items)]
         (common/item i (:id invoice) (:currency invoice) lang)))
     (button

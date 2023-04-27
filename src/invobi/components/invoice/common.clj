@@ -65,7 +65,8 @@
                    :hx-target "next .total-price"}}))
     (table/column
       {:class "total-price"
-       :align "right"}
+       :align "right"
+       :highlight? true}
       (format-currency (* (parse-float qty) (parse-float price)) currency))
     (line-options/main 
       {}
