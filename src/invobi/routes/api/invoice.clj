@@ -195,6 +195,13 @@
     (db/update-items id new-items)
     (->html [:span (format-currency (* (parse-float price) (parse-float (:qty item))) currency)])))
 
+(defn- delete-item [request]
+  (let [{:keys [id item-id]} (-> request :params)
+        items (db/get-items id)
+        new-items (remove #(= (:id %) item-id) items)]
+    (db/update-items id new-items)
+    (->json {:status "ok"})))
+
 (def routes
   [{:path "/api/:lang/invoice/:id/update-nr"
     :method :post
@@ -246,5 +253,8 @@
     :response #(route-middleware % update-item-qty schema/UpdateItemQty)}
    {:path "/api/:lang/invoice/:id/:item-id/update-item-price"
     :method :post
-    :response #(route-middleware % update-item-price schema/UpdateItemPrice)}])
+    :response #(route-middleware % update-item-price schema/UpdateItemPrice)}
+   {:path "/api/:lang/invoice/:id/:item-id/delete-item"
+    :method :post
+    :response #(route-middleware % delete-item schema/DeleteItem)}])
 

@@ -97,3 +97,9 @@
              [:id string?]
              [:item-id string?]]]
    [:form-params [:map ["price" string?]]]])
+
+(def DeleteItem
+  [:map
+   [:params [:map
+             [:id string?]
+             [:item-id string?]]]])

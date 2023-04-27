@@ -25,7 +25,7 @@
      (for [currency currencies]
        (when-not (= (:name currency) (:currency invoice))
          (option
-           {:path (str "/" lang "/invoice/" (:id invoice) "/currency/" (:name currency))
+           {:href (str "/" lang "/invoice/" (:id invoice) "/currency/" (:name currency))
             :size "small"
             :type "blank"
             :no-border? true}

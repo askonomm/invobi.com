@@ -14,9 +14,10 @@
 (defn row
   ([content]
    (row {} content))
-  ([{:keys [heading?]} & children]
+  ([{:keys [heading? class]} & children]
    [:div {:class (cond-> "row" 
-                   heading? (str " heading"))}
+                   heading? (str " heading")
+                   class (str " " class))}
     children]))
 
 (defn column

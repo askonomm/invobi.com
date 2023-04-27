@@ -2,17 +2,31 @@
   (:require
     [invobi.utils :refer [lang-code->lang-name translate current-year]]))
 
-(defn option [opts & children]
+(defn button [props & children]
   (let [class (cond->
                 "button"
-                (-> opts :class) (str " " (-> opts :class))
-                (-> opts :size) (str " " (-> opts :size))
-                (-> opts :type) (str " " (-> opts :type))
-                (-> opts :disabled?) (str " disabled")
-                (-> opts :no-border?) (str " no-border"))]
-    [:a {:class class
-         :href (-> opts :path)}
-     children]))
+                (-> props :class) (str " " (-> props :class))
+                (-> props :size) (str " " (-> props :size))
+                (-> props :type) (str " " (-> props :type))
+                (-> props :disabled?) (str " disabled")
+                (-> props :no-border?) (str " no-border")
+                (-> props :color) (str " color-" (-> props :color)))]
+    (if (-> props :href)
+      [:a {:href (-> props :href)
+           :class class
+           :target (-> props :target)
+           :style (-> props :style)}
+       children]
+      [:button (merge {:onclick (-> props :on-click)
+                       :class class
+                       :style (-> props :style)}
+                      (-> props :hx))
+       children])))
+
+(defn option [opts & children]
+  (button
+    opts   
+    children))
 
 (defn options [& options]
   [:div.options
@@ -27,7 +41,7 @@
        (for [lang languages]
         (when-not (= (-> data :lang) lang)
           (option
-            {:path (str "/" lang (-> data :current-pure-path))
+            {:href (str "/" lang (-> data :current-pure-path))
              :size "small"
              :type "blank"
              :no-border? true}
@@ -52,27 +66,6 @@
    [:a.logo {:href "https://repl.ee" :target "_blank"}
     [:img {:src "/img/logo.png" :alt "REPL logo"}]]])
 
-(defn button [props & children]
-  (let [class (cond->
-                "button"
-                (-> props :class) (str " " (-> props :class))
-                (-> props :size) (str " " (-> props :size))
-                (-> props :type) (str " " (-> props :type))
-                (-> props :disabled?) (str " disabled")
-                (-> props :no-border?) (str " no-border")
-                (-> props :color) (str " color-" (-> props :color)))]
-    (if (-> props :href)
-      [:a {:href (-> props :href)
-           :class class
-           :target (-> props :target)
-           :style (-> props :style)}
-       children]
-      [:button (merge {:onclick (-> props :on-click)
-                       :class class
-                       :style (-> props :style)}
-                      (-> props :hx))
-       children])))
-
 (defn input [{:keys [class placeholder value style full-width? type hx]}]
   (let [class (cond->
                 "input"
@@ -95,3 +88,4 @@
                        :style style}
                       hx)
      value]))
+

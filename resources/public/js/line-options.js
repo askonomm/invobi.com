@@ -1,9 +1,17 @@
+function closeAllLineOptions() {
+  document.querySelectorAll('.invoice-line-options').forEach(node => {
+    node.querySelector('.options').classList.remove('is-visible');
+  });
+}
+
 function onToggleButtonClick(e) {
   if (e.target.parentElement.classList.contains('invoice-line-options')) {
+    closeAllLineOptions();
     e.target.parentElement.querySelector('.options').classList.toggle('is-visible');
   }
 
   if (e.target.parentElement.classList.contains('toggle-button')) {
+    closeAllLineOptions();
     e.target.parentElement.parentElement.querySelector('.options').classList.toggle('is-visible');
   }
 }

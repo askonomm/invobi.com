@@ -34,7 +34,7 @@
 
 (defn item [{:keys [id name qty price]} invoice-id currency lang]
   (table/row
-    {}
+    {:class "item"}
     (table/column
       {}
       (input {:full-width? true
@@ -72,7 +72,9 @@
       (option 
         {:size "small"
          :type "blank"
-         :no-border? true}
+         :no-border? true
+         :hx {:hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/delete-item")
+              :hx-swap "delete"
+              :hx-target "closest .item"}}
         (translate lang :remove-item)))))
-                         
-    
+
