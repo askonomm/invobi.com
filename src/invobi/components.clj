@@ -7,22 +7,22 @@
   It's important to note that it also takes in an additional map `:hx`, 
   which is used for HTMx attributes."
   [props & children]
-  (let [class (cond->
-                "button"
-                (-> props :class) (str " " (-> props :class))
-                (-> props :size) (str " " (-> props :size))
-                (-> props :type) (str " " (-> props :type))
-                (-> props :disabled?) (str " disabled")
-                (-> props :no-border?) (str " no-border")
-                (-> props :color) (str " color-" (-> props :color)))]
+  (let [classname (cond->
+                    "button"
+                    (-> props :class) (str " " (-> props :class))
+                    (-> props :size) (str " " (-> props :size))
+                    (-> props :type) (str " " (-> props :type))
+                    (-> props :disabled?) (str " disabled")
+                    (-> props :no-border?) (str " no-border")
+                    (-> props :color) (str " color-" (-> props :color)))]
     (if (-> props :href)
       [:a {:href (-> props :href)
-           :class class
+           :class classname
            :target (-> props :target)
            :style (-> props :style)}
        children]
       [:button (merge {:onclick (-> props :on-click)
-                       :class class
+                       :class classname
                        :style (-> props :style)}
                       (-> props :hx))
        children])))

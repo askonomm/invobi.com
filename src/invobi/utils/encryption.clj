@@ -6,7 +6,9 @@
     [buddy.core.hash :as hash-util]
     [buddy.core.nonce :as nonce]))
 
-(defn encrypt [v k]
+(defn encrypt 
+  "Encrypts the given value with the given key."
+  [v k]
   (let [v (or v "")
         iv (nonce/random-bytes 16)
         encryption-key (hash-util/sha256 k)
@@ -16,7 +18,9 @@
     (-> (bytes-util/concat iv encrypted-text)
         codecs/bytes->hex)))
 
-(defn decrypt [v k]
+(defn decrypt 
+  "Decrypts the given value with the given key."
+  [v k]
   (when-not (nil? v)
     (let [[iv-part text-part] (split-at 16 (codecs/hex->bytes v))
           iv (byte-array iv-part)

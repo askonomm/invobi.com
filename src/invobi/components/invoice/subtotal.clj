@@ -19,4 +19,8 @@
         (table/column
           {:align "right"
            :highlight? true}
-          (format-currency subtotal (:currency invoice)))))))
+          [:div 
+           {:hx-get (str "/api/" lang "/invoice/" (:id invoice) "/subtotal")
+            :hx-trigger "every 1s"
+            :hx-swap "innerHTML"}
+           (format-currency subtotal (:currency invoice))])))))

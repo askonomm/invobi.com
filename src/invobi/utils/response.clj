@@ -5,6 +5,7 @@
     [invobi.utils.layout :refer [wrap-page]]))
 
 (defn ->json
+  "Returns a JSON response with the given data."
   ([data]
    (->json 200 data))
   ([status data]
@@ -16,6 +17,7 @@
     :body (json/write-str data)}))
 
 (defn ->html
+  "Returns an HTML response with the given contents."
   [contents]
   {:status 200
    :headers {"Content-Type" "text/html"
@@ -25,6 +27,7 @@
    :body (html contents)})
 
 (defn ->html-page
+  "Returns an HTML response with the given contents wrapped in a page."
   ([contents]
    (->html-page {} contents))
   ([opts contents]
@@ -36,6 +39,7 @@
     :body (wrap-page opts (html contents))}))
 
 (defn ->pdf
+  "Returns a PDF response with the given data."
   [name data]
   {:status 200
    :headers {"Content-Type" "application/pdf"
@@ -45,6 +49,7 @@
    :body data})
 
 (defn ->redirect
+  "Returns a redirect response with the given path."
   ([path]
    (->redirect 302 path))
   ([status path]

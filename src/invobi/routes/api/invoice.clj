@@ -6,6 +6,18 @@
    [invobi.utils :refer [route-middleware parse-float format-currency]]
    [invobi.schema.routes.api.invoice :as schema]))
 
+(defn- subtotal [request]
+  (let [{:keys [id]} (-> request :params)
+        items (db/get-items id)
+        currency (db/get-currency id)]
+    (->html
+      (-> (reduce  
+            (fn [acc i]
+               (+ acc (* (parse-float (:price i)) (parse-float (:qty i)))))
+            0
+            items)
+          (format-currency currency)))))
+     
 (defn- update-nr [request]
   (let [{:keys [id]} (-> request :params)
         {:strs [nr]} (-> request :form-params)]
@@ -203,7 +215,10 @@
     (->json {:status "ok"})))
 
 (def routes
-  [{:path "/api/:lang/invoice/:id/update-nr"
+  [{:path "/api/:lang/invoice/:id/subtotal"
+    :method :get
+    :response #(route-middleware % subtotal schema/Subtotal)}
+   {:path "/api/:lang/invoice/:id/update-nr"
     :method :post
     :response #(route-middleware % update-nr schema/UpdateNr)}
    {:path "/api/:lang/invoice/:id/update-from-name"

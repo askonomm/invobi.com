@@ -1,5 +1,9 @@
 (ns invobi.schema.routes.api.invoice)
 
+(def Subtotal
+  [:map
+   [:params [:map [:id string?]]]])
+
 (def UpdateNr
   [:map
    [:params [:map [:id string?]]]
