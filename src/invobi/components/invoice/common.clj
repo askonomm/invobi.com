@@ -21,7 +21,7 @@
              :value value
              :hx {:name "value"
                   :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-" direction "-field-value")
-                  :hx-trigger "keyup changed delay:250ms"}}))
+                  :hx-trigger "input changed delay:250ms"}}))
 
 (defn field-label [direction {:keys [id invoice-id lang value]}]
   (input {:full-width? true
@@ -30,7 +30,7 @@
           :value value
           :hx {:name "label"
                :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-" direction "-field-label")
-               :hx-trigger "keyup changed delay:250ms"}}))
+               :hx-trigger "input changed delay:250ms"}}))
 
 (defn item [{:keys [id name qty price]} invoice-id currency lang]
   (table/row
@@ -42,7 +42,7 @@
               :value name
               :hx {:name "name"
                    :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-item-name")
-                   :hx-trigger "keyup changed delay:250ms"}}))
+                   :hx-trigger "input changed delay:250ms"}}))
     (table/column
       {}
       (input {:full-width? true
@@ -51,7 +51,7 @@
               :hx {:name "qty"
                    :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-item-qty")
                    :hx-swap "innerHTML"
-                   :hx-trigger "keyup"
+                   :hx-trigger "input changed delay:250ms"
                    :hx-target "next .total-price"}}))
     (table/column
       {}
@@ -61,7 +61,7 @@
               :hx {:name "price"
                    :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-item-price")
                    :hx-swap "innerHTML"
-                   :hx-trigger "keyup"
+                   :hx-trigger "input changed delay:250ms"
                    :hx-target "next .total-price"}}))
     (table/column
       {:class "total-price"

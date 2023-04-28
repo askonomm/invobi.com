@@ -1,12 +1,19 @@
-(ns invobi.components.invoice.items
+(ns invobi.components.invoice.items 
   (:require
-    [invobi.components :refer [button]]
-    [invobi.components.table :as table]
-    [invobi.components.invoice.common :as common]
-    [invobi.utils :refer [translate]]))
+     [invobi.components :refer [button options option]]
+     [invobi.components.invoice.common :as common]
+     [invobi.components.table :as table]
+     [invobi.utils :refer [translate]]))
 
 (defn- qty [qty-type]
-  "QTY")
+  [:div 
+    "QTY"
+    (options
+      (option
+        {:size "small"
+         :type "blank"
+         :no-border? true}
+        "Hr"))])
 
 (defn main [{:keys [lang invoice]}]
   (list
