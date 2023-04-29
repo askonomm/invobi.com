@@ -84,3 +84,12 @@
               :hx-target "closest .item"}}
         (translate lang :remove-item)))))
 
+(defn discount [{:keys [invoice-id discount-name discount-percentage]}]
+  (table/main
+    {}
+    (table/row
+      {}
+      (table/column
+        {}
+        "asdasd"))))
+

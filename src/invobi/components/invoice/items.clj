@@ -6,7 +6,6 @@
      [invobi.utils :refer [translate]]))
 
 (defn- qty [qty-type id lang]
-  (prn "qty type: " qty-type)
   [:div.qty-type 
     (button
       {:size "small"
