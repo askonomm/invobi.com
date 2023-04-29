@@ -20,6 +20,7 @@
 (defn- create-invoice [request]
   (let [data (data-from-request request)
         id (db.invoices/create-invoice {:currency "EUR"
+                                        :qty-type "qty"
                                         :from-fields (json/write-str [])
                                         :to-fields (json/write-str [])
                                         :items [{:id (str (random-uuid))
@@ -35,6 +36,15 @@
         currency (-> request :params :currency string/upper-case)]
     (when (contains? allowed-currencies currency)
       (db/update-currency id currency))
+    (->redirect (str "/" (:lang data) "/invoice/" id))))
+
+(defn- set-qty-type [request]
+  (let [data (data-from-request request)
+        id (-> request :params :id)
+        allowed-qty-types #{"qty" "hr"}
+        qty-type (-> request :params :qty-type)]
+    (when (contains? allowed-qty-types qty-type)
+      (db/update-qty-type id qty-type))
     (->redirect (str "/" (:lang data) "/invoice/" id))))
 
 (defn- invoice [request]
@@ -56,6 +66,9 @@
    {:path "/:lang/invoice/:id/currency/:currency"
     :method :get
     :response set-currency}
+   {:path "/:lang/invoice/:id/qty-type/:qty-type"
+    :method :get
+    :response set-qty-type}
    {:path "/:lang/invoice/:id"
     :method :get
     :response invoice}

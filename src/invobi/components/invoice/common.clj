@@ -5,7 +5,9 @@
      [invobi.components.table :as table]
      [invobi.utils :refer [format-currency parse-float translate]]))
 
-(defn delete-field [direction {:keys [id invoice-id lang]}]
+(defn delete-field 
+  "Delete a field from the invoice"
+  [direction {:keys [id invoice-id lang]}]
   (button
     {:class "delete-field color-warning"
      :size "small"
@@ -15,7 +17,9 @@
           :hx-target "closest .field"}}
     (translate lang :delete-field)))
 
-(defn field-value [direction {:keys [id invoice-id lang value]}]
+(defn field-value
+  "The value of a field"
+  [direction {:keys [id invoice-id lang value]}]
   (textarea {:full-width? true
              :placeholder (translate lang :field-label)
              :value value
@@ -23,7 +27,9 @@
                   :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-" direction "-field-value")
                   :hx-trigger "input changed delay:250ms"}}))
 
-(defn field-label [direction {:keys [id invoice-id lang value]}]
+(defn field-label
+  "The label of a field"
+  [direction {:keys [id invoice-id lang value]}]
   (input {:full-width? true
           :placeholder (translate lang :field-value)
           :class "field-label"
@@ -32,7 +38,9 @@
                :hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/update-" direction "-field-label")
                :hx-trigger "input changed delay:250ms"}}))
 
-(defn item [{:keys [id name qty price]} invoice-id currency lang]
+(defn item 
+  "An item in the invoice"
+  [{:keys [id name qty price]} invoice-id currency lang]
   (table/row
     {:class "item"}
     (table/column
@@ -71,10 +79,7 @@
     (line-options/main 
       {}
       (option 
-        {:size "small"
-         :type "blank"
-         :no-border? true
-         :hx {:hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/delete-item")
+        {:hx {:hx-post (str "/api/" lang "/invoice/" invoice-id "/" id "/delete-item")
               :hx-swap "delete"
               :hx-target "closest .item"}}
         (translate lang :remove-item)))))

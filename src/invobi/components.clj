@@ -21,7 +21,7 @@
            :target (-> props :target)
            :style (-> props :style)}
        children]
-      [:button (merge {:onclick (-> props :on-click)
+      [:button (merge {:onclick (-> props :onclick)
                        :class classname
                        :style (-> props :style)}
                       (-> props :hx))
@@ -31,7 +31,10 @@
   "Renders a button or a link depending on the props"
   [opts & children]
   (button
-    opts   
+    (merge {:size "small"
+            :type "blank"
+            :no-border? true}
+           opts) 
     children))
 
 (defn options 
@@ -51,10 +54,7 @@
        (for [lang languages]
         (when-not (= (-> data :lang) lang)
           (option
-            {:href (str "/" lang (-> data :current-pure-path))
-             :size "small"
-             :type "blank"
-             :no-border? true}
+            {:href (str "/" lang (-> data :current-pure-path))}
             (lang-code->lang-name lang)))))]))
 
 (defn header 

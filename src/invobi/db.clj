@@ -1,6 +1,5 @@
 (ns invobi.db
   (:require
-   [next.jdbc :as jdbc]
    [ragtime.jdbc :as ragtime.jdbc]
    [ragtime.repl :as ragtime.repl]))
 
@@ -10,10 +9,6 @@
      :dbname "db/invo.db"}
     {:dbtype "sqlite"
      :dbname "/dbs/invo.db"}))
-
-(defn connection []
-  (-> (jdbc/get-datasource datasource)
-      (jdbc/get-connection)))
 
 (defn migrator-config []
   {:datastore (ragtime.jdbc/sql-database (-> datasource

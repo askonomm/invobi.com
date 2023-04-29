@@ -25,8 +25,5 @@
      (for [currency currencies]
        (when-not (= (:name currency) (:currency invoice))
          (option
-           {:href (str "/" lang "/invoice/" (:id invoice) "/currency/" (:name currency))
-            :size "small"
-            :type "blank"
-            :no-border? true}
+           {:href (str "/" lang "/invoice/" (:id invoice) "/currency/" (:name currency))}
            [:span.symbol (:symbol currency)] (:name currency)))))])

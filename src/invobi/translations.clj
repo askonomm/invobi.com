@@ -1,7 +1,9 @@
 (ns invobi.translations)
 
 (def et
-  {:company-extra "Lisa väli"
+  {:qty "Kogus"
+   :hr "Tunde"
+   :company-extra "Lisa väli"
    :field-label "Välja nimi (Valikuline)"
    :field-value "Välja sisu"
    :add-field "Lisa väli"
@@ -27,7 +29,6 @@
    :due-date "Tähtaeg"
    :items "Teenused / Kaubad"
    :name "Nimi"
-   :qty "Kogus"
    :price "Hind"
    :total "Kokku"
    :remove-item "Eemalda"
@@ -61,7 +62,9 @@
    :about-foreverfree-full "Arve loomine jääb igavesti tasuta ja ilma piiranguteta. See on lubadus. Me plaanime raha teenida pakkudes lisa võimalusi tulevikus, kuid me ei piira olemasolevat funktsionaalsust kunagi."})
 
 (def en
-  {:company-extra "Extra field"
+  {:qty "Qty"
+   :hr "Hrs"
+   :company-extra "Extra field"
    :field-label "Field name (Optional)"
    :field-value "Field value"
    :add-field "Add field"
@@ -87,7 +90,6 @@
    :due-date "Due Date"
    :items "Items"
    :name "Name"
-   :qty "Qty"
    :price "Price"
    :total "Total"
    :remove-item "Remove Item"
@@ -121,7 +123,9 @@
    :about-foreverfree-full "The creation of invoices will always be free and without restrictions on Invo and that's a promise. We plan to make money by offering additional features in the future, but we'll never cripple core functionality."})
 
 (def es
-  {:company-extra "Campo aditional"
+  {:qty "Cant."
+   :hr "Hrs"
+   :company-extra "Campo aditional"
    :field-label "Nombre del campo (Opcional)"
    :field-value "Valor del campo"
    :add-field "Agregar campo"
@@ -147,7 +151,6 @@
    :due-date "Vencimiento"
    :items "Artículos"
    :name "Nombre"
-   :qty "Cant."
    :price "Precio"
    :total "Total"
    :remove-item "Quitar Artículo"
